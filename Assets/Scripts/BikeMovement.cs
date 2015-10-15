@@ -50,12 +50,15 @@ public class BikeMovement : MonoBehaviour
 
 	void Fall ()
 	{
-		started = false;
-		fallen = true;
-		CancelInvoke ();
-		Invoke ("EnableReset", 1.0f);
-		rider.SetActive (false);
-		InstantiateRagdoll ();
+		if (!fallen) {
+			started = false;
+			fallen = true;
+			CancelInvoke ();
+			Invoke ("EnableReset", 1.0f);
+			rider.SetActive (false);
+			PlayerPrefs.SetInt ("Crashes", PlayerPrefs.GetInt ("Crashes") + 1);
+			InstantiateRagdoll ();
+		}
 	}
 
 	private void InstantiateRagdoll ()
