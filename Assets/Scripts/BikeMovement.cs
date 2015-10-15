@@ -8,6 +8,7 @@ public class BikeMovement : MonoBehaviour
 	public float acceleration = 15;
 	private Rigidbody2D body;
 	private GameObject rider;
+	public float groundedStaticTorque = 10;
 	public float groundedPumpStrength = 500;
 	public float aerialPumpStrength = -100;
 	public float maxJumpStrength = 2000;
@@ -33,6 +34,7 @@ public class BikeMovement : MonoBehaviour
 	void FixedUpdate ()
 	{
 		if (started && grounded) {
+			body.AddTorque (groundedStaticTorque);
 			if (body.velocity.magnitude < maxSpeed) {
 				body.AddForce (Vector2.right * acceleration);
 			}
@@ -103,16 +105,17 @@ public class BikeMovement : MonoBehaviour
 	void Jump ()
 	{
 		if (started && grounded && !fallen) {
+			CancelInvoke ();
 			GroundJump ();
 		}
 		if (!grounded && !fallen) {
+			CancelInvoke ();
 			AerialJump ();
 		}
 	}
 
 	void GroundJump ()
 	{
-		CancelInvoke ();
 		rider.SendMessage ("Jump", SendMessageOptions.DontRequireReceiver);
 		body.AddForce (Vector2.up * jumpStrength);
 		body.AddTorque (jumpTorque);
@@ -121,7 +124,6 @@ public class BikeMovement : MonoBehaviour
 
 	void AerialJump ()
 	{
-		CancelInvoke ();
 		rider.SendMessage ("Jump", SendMessageOptions.DontRequireReceiver);
 		body.AddForce (Vector2.down * landStrength);
 		body.AddTorque (aerialJumpTorque);

@@ -27,10 +27,10 @@ public class SceneController : MonoBehaviour
 	{
 		if (CameraNotPanning ()) {
 			Time.timeScale = 1;
-			player.SendMessage("Continue");
+			player.SendMessage ("Continue");
 		} else {
 			Time.timeScale = 0;
-			player.SendMessage("Pause");
+			player.SendMessage ("Pause");
 		}
 		if (PlayerHasCompletedLevel ()) {
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") + 1);
@@ -41,6 +41,7 @@ public class SceneController : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.R) && Input.GetKey (KeyCode.LeftShift)) {
 			PlayerPrefs.SetInt ("Level", 0);
+			PlayerPrefs.SetInt ("Crashes", 0);
 			Restart ();
 		} else if (Input.GetKeyDown (KeyCode.R)) {
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") - 1);
@@ -50,7 +51,7 @@ public class SceneController : MonoBehaviour
 
 	private void InitializeLevel ()
 	{
-		cam.SendMessage("SetLevel", PlayerPrefs.GetInt("Level"));
+		cam.SendMessage ("SetLevel", PlayerPrefs.GetInt ("Level"));
 		SpawnPlayer ();
 	}
 
