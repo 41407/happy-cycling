@@ -83,18 +83,19 @@ public class BikeMovement : MonoBehaviour
 		body.AddTorque (groundedPumpStrength);
 		jumpStrength = maxJumpStrength;
 		jumpTorque = groundedJumpTorque;
-		InvokeRepeating ("AdjustJumpStrength", 0.60f, 0.025f);
+		InvokeRepeating ("AdjustJumpStrength", 0.50f, 0.016f);
 	}
 
 	void AerialPump ()
 	{
+		jumpStrength = 500;
 		rider.SendMessage ("Pump", SendMessageOptions.DontRequireReceiver);
 		body.AddTorque (aerialPumpStrength * Mathf.Sign (body.angularVelocity));
 	}
 
 	void AdjustJumpStrength ()
 	{
-		jumpStrength = Mathf.Clamp (jumpStrength - 25, 1000, 2000);
+		jumpStrength = Mathf.Clamp (jumpStrength - 50, 500, 2000);
 		print ("Jump strength adjusted to " + jumpStrength);
 		jumpTorque = 50;
 	}
