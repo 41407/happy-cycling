@@ -100,7 +100,6 @@ public class BikeMovement : MonoBehaviour
 	void AdjustJumpStrength ()
 	{
 		jumpStrength = Mathf.Clamp (jumpStrength - 50, 500, 2000);
-		print ("Jump strength adjusted to " + jumpStrength);
 		jumpTorque = 50;
 	}
 
