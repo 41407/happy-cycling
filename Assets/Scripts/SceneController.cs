@@ -9,10 +9,12 @@ public class SceneController : MonoBehaviour
 	private bool paused = false;
 	private AudioSource aud;
 	public AudioClip levelStart;
+	private GameObject music;
 
 	void Awake ()
 	{
-		aud = GetComponent<AudioSource>();
+		music = (GameObject)Resources.Load ("Music");
+		aud = GetComponent<AudioSource> ();
 		playerPrefab = (GameObject)Resources.Load ("Player");
 		cam = Camera.main;
 	}
@@ -20,6 +22,10 @@ public class SceneController : MonoBehaviour
 	void Start ()
 	{
 		aud.PlayOneShot (levelStart);
+		if (GameObject.FindGameObjectsWithTag ("Music").Length == 0) {
+			GameObject musicObject = (GameObject)Instantiate (music, Vector3.zero, Quaternion.identity);
+			//musicObject.transform.parent = cam.transform;
+		}
 		InitializeLevel ();
 	}
 

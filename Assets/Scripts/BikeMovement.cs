@@ -90,7 +90,7 @@ public class BikeMovement : MonoBehaviour
 	void GroundPump ()
 	{
 		aud.clip = pump;
-		aud.volume = 1;
+		aud.volume = 0.9f;
 		aud.Play ();
 		rider.SendMessage ("Pump", SendMessageOptions.DontRequireReceiver);
 		body.AddTorque (groundedPumpStrength);
@@ -128,7 +128,7 @@ public class BikeMovement : MonoBehaviour
 	{
 		aud.Stop ();
 		aud.volume = (jumpStrength - 500) / 2000;
-		aud.PlayOneShot (jump);
+		aud.PlayOneShot (jump, 0.9f);
 		rider.SendMessage ("Jump", SendMessageOptions.DontRequireReceiver);
 		body.AddForce (Vector2.up * jumpStrength);
 		body.AddTorque (jumpTorque);
