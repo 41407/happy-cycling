@@ -7,6 +7,7 @@ public class Counter : MonoBehaviour
 	private Text t;
 	public float refreshRate = 1;
 	public string playerPrefsKey;
+	public bool emptyIfZero = true;
 
 	void Awake ()
 	{
@@ -16,7 +17,11 @@ public class Counter : MonoBehaviour
 
 	void UpdateText ()
 	{
-		int level = PlayerPrefs.GetInt (playerPrefsKey);
-		t.text = "" + level;
+		int number = PlayerPrefs.GetInt (playerPrefsKey);
+		if (number > 0) {
+			t.text = "" + number;
+		} else {
+			t.text = "";
+		}
 	}
 }
