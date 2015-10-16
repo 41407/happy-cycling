@@ -45,6 +45,7 @@ public class BikeMovement : MonoBehaviour
 	{
 		if (!fallen) {
 			started = true;
+			rider.SendMessage("Go", SendMessageOptions.DontRequireReceiver);
 		} else if (resetEnabled) {
 			GameObject.Find ("Scene Controller").SendMessage ("Restart");
 		}
