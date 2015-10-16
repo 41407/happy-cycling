@@ -6,6 +6,7 @@ public class SceneController : MonoBehaviour
 	private GameObject playerPrefab;
 	private GameObject player;
 	private Camera cam;
+	private bool paused = false;
 
 	void Awake ()
 	{
@@ -25,12 +26,14 @@ public class SceneController : MonoBehaviour
 
 	void Update ()
 	{
-		if (CameraNotPanning ()) {
+		if (CameraNotPanning () && paused) {
 			Time.timeScale = 1;
 			player.SendMessage ("Continue");
-		} else {
+			paused = false;
+		} else if (!CameraNotPanning ()) {
 			Time.timeScale = 0;
 			player.SendMessage ("Pause");
+			paused = true;
 		}
 		if (PlayerHasCompletedLevel ()) {
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") + 1);

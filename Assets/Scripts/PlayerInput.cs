@@ -29,5 +29,6 @@ public class PlayerInput : MonoBehaviour
 	void Continue ()
 	{
 		paused = false;
+		SendMessage ("Go");
 	}
 }
