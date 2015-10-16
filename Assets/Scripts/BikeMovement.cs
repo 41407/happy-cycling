@@ -22,6 +22,7 @@ public class BikeMovement : MonoBehaviour
 	public bool fallen = false;
 	private bool resetEnabled = false;
 	public float ungroundGraceTime = 0.10f;
+	private bool rearWheelDown = false;
 
 	void Awake ()
 	{
@@ -33,7 +34,7 @@ public class BikeMovement : MonoBehaviour
 
 	void FixedUpdate ()
 	{
-		if (started && grounded) {
+		if (started && grounded && rearWheelDown) {
 			body.AddTorque (groundedStaticTorque);
 			if (body.velocity.magnitude < maxSpeed) {
 				body.AddForce (Vector2.right * acceleration);
@@ -148,5 +149,13 @@ public class BikeMovement : MonoBehaviour
 	void LeaveGround ()
 	{
 		grounded = false;
+	}
+	
+	void OnTriggerStay2D (Collider2D col) {
+		rearWheelDown = true;
+	}
+	
+	void OnTriggerExit2D (Collider2D col) {
+		rearWheelDown = false;
 	}
 }
