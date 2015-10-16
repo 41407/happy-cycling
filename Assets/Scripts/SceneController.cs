@@ -7,15 +7,19 @@ public class SceneController : MonoBehaviour
 	private GameObject player;
 	private Camera cam;
 	private bool paused = false;
+	private AudioSource aud;
+	public AudioClip levelStart;
 
 	void Awake ()
 	{
+		aud = GetComponent<AudioSource>();
 		playerPrefab = (GameObject)Resources.Load ("Player");
 		cam = Camera.main;
 	}
 
 	void Start ()
 	{
+		aud.PlayOneShot (levelStart);
 		InitializeLevel ();
 	}
 

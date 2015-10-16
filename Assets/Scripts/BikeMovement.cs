@@ -23,9 +23,14 @@ public class BikeMovement : MonoBehaviour
 	private bool resetEnabled = false;
 	public float ungroundGraceTime = 0.10f;
 	private bool rearWheelDown = false;
+	public AudioClip pump;
+	public AudioClip jump;
+	public AudioClip crash;
+	private AudioSource aud;
 
 	void Awake ()
 	{
+		aud = GetComponent<AudioSource> ();
 		ragdoll = (GameObject)Resources.Load ("Downed Rider");
 		body = GetComponent<Rigidbody2D> ();
 		body.centerOfMass = new Vector2 (-0.1f, -0.1f);
@@ -46,7 +51,7 @@ public class BikeMovement : MonoBehaviour
 	{
 		if (!fallen) {
 			started = true;
-			rider.SendMessage("Go", SendMessageOptions.DontRequireReceiver);
+			rider.SendMessage ("Go", SendMessageOptions.DontRequireReceiver);
 		} else if (resetEnabled) {
 			GameObject.Find ("Scene Controller").SendMessage ("Restart");
 		}
@@ -59,6 +64,7 @@ public class BikeMovement : MonoBehaviour
 			fallen = true;
 			CancelInvoke ();
 			Invoke ("EnableReset", 1.0f);
+			aud.PlayOneShot (crash);
 			rider.SetActive (false);
 			PlayerPrefs.SetInt ("Crashes", PlayerPrefs.GetInt ("Crashes") + 1);
 			InstantiateRagdoll ();
@@ -83,6 +89,9 @@ public class BikeMovement : MonoBehaviour
 
 	void GroundPump ()
 	{
+		aud.clip = pump;
+		aud.volume = 1;
+		aud.Play ();
 		rider.SendMessage ("Pump", SendMessageOptions.DontRequireReceiver);
 		body.AddTorque (groundedPumpStrength);
 		jumpStrength = maxJumpStrength;
@@ -117,6 +126,9 @@ public class BikeMovement : MonoBehaviour
 
 	void GroundJump ()
 	{
+		aud.Stop ();
+		aud.volume = (jumpStrength - 500) / 2000;
+		aud.PlayOneShot (jump);
 		rider.SendMessage ("Jump", SendMessageOptions.DontRequireReceiver);
 		body.AddForce (Vector2.up * jumpStrength);
 		body.AddTorque (jumpTorque);
@@ -150,11 +162,13 @@ public class BikeMovement : MonoBehaviour
 		grounded = false;
 	}
 	
-	void OnTriggerStay2D (Collider2D col) {
+	void OnTriggerStay2D (Collider2D col)
+	{
 		rearWheelDown = true;
 	}
 	
-	void OnTriggerExit2D (Collider2D col) {
+	void OnTriggerExit2D (Collider2D col)
+	{
 		rearWheelDown = false;
 	}
 }
