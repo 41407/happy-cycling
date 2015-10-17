@@ -59,6 +59,9 @@ public class SceneController : MonoBehaviour
 		} else if (Input.GetKeyDown (KeyCode.R)) {
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") - 1);
 			Restart ();
+		} else if (Input.GetKeyDown (KeyCode.T)) {
+			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") + 1);
+			Restart ();
 		}
 	}
 
