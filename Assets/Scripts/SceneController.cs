@@ -9,28 +9,25 @@ public class SceneController : MonoBehaviour
 	private bool paused = false;
 	private AudioSource aud;
 	public AudioClip levelStart;
-	private GameObject music;
+	private LevelBuilder builder;
 
 	void Awake ()
 	{
-		music = (GameObject)Resources.Load ("Music");
 		aud = GetComponent<AudioSource> ();
 		playerPrefab = (GameObject)Resources.Load ("Player");
 		cam = Camera.main;
+		builder = GameObject.Find ("Level Builder").GetComponent<LevelBuilder> ();
 	}
 
 	void Start ()
 	{
 		aud.PlayOneShot (levelStart);
-		if (GameObject.FindGameObjectsWithTag ("Music").Length == 0) {
-			GameObject musicObject = (GameObject)Instantiate (music, Vector3.zero, Quaternion.identity);
-			//musicObject.transform.parent = cam.transform;
-		}
 		InitializeLevel ();
 	}
 
 	void Restart ()
 	{
+		builder.Reset ();
 		Application.LoadLevel (Application.loadedLevel);
 	}
 
@@ -46,7 +43,10 @@ public class SceneController : MonoBehaviour
 			paused = true;
 		}
 		if (PlayerHasCompletedLevel ()) {
-			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") + 1);
+			int level = PlayerPrefs.GetInt ("Level") + 1;
+			PlayerPrefs.SetInt ("Level", level);
+			builder.Build (level, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth);
+			builder.Build (level + 1, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth * 2);
 			cam.SendMessage ("Advance");
 		}
 		if (player.transform.position.y < -5) {
@@ -67,7 +67,12 @@ public class SceneController : MonoBehaviour
 
 	private void InitializeLevel ()
 	{
-		cam.SendMessage ("SetLevel", PlayerPrefs.GetInt ("Level"));
+		int level = PlayerPrefs.GetInt ("Level");
+		Debug.Log ("Initializing level " + level);
+		builder.Build (level - 1, cam.transform.position, -cam.GetComponent<CameraController>().levelWidth);
+		builder.Build (level, cam.transform.position);
+		builder.Build (level + 1, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth);
+		cam.SendMessage ("SetLevel", level);
 		SpawnPlayer ();
 	}
 
