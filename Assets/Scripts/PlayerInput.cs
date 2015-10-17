@@ -8,10 +8,10 @@ public class PlayerInput : MonoBehaviour
 	void Update ()
 	{
 		if (!paused) {
-			if (Input.GetMouseButtonDown (0)) {
+			if (Input.GetMouseButtonDown (0) || Input.GetKeyDown (KeyCode.Space)) {
 				SendMessage ("Pump");
 			}
-			if (Input.GetMouseButtonUp (0)) {
+			if (Input.GetMouseButtonUp (0) || Input.GetKeyUp (KeyCode.Space)) {
 				SendMessage ("Go");
 				SendMessage ("Jump");
 			}
