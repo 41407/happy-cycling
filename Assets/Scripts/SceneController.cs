@@ -21,8 +21,8 @@ public class SceneController : MonoBehaviour
 
 	void Start ()
 	{
-		aud.PlayOneShot (levelStart);
 		InitializeLevel ();
+		aud.PlayOneShot (levelStart);
 	}
 
 	void Restart ()

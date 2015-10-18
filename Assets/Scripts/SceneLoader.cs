@@ -4,17 +4,22 @@ using System.Collections;
 public class SceneLoader : MonoBehaviour
 {
 	public string sceneName;
+	private AsyncOperation async;
 
 	void Start ()
 	{
-		StartCoroutine (LoadScene ());
+		DontDestroyOnLoad (gameObject);
 		PlayerPrefs.SetInt ("Level", 0);
+		async = Application.LoadLevelAsync (sceneName);
 	}
-	
-	IEnumerator LoadScene ()
+
+	void Update ()
 	{
-		AsyncOperation async = Application.LoadLevelAsync (sceneName);
-		Debug.Log ("Loading next scene.");
-		yield return async;
+		if (async != null) {
+			if (async.isDone) {
+				GameObject.Find ("Music").SendMessage ("Play");
+				Destroy (gameObject);
+			}
+		}
 	}
 }

@@ -10,13 +10,17 @@ public class MusicController : MonoBehaviour
 	{
 		aud = GetComponent<AudioSource> ();
 		DontDestroyOnLoad (this.gameObject);
-		aud.Play ();
 	}
 
 	void Update ()
 	{
-		if(Input.GetKeyDown(KeyCode.M)) {
+		if (Input.GetKeyDown (KeyCode.M)) {
 			aud.volume = (aud.volume > 0) ? 0 : 0.7f;
 		}
+	}
+
+	void Play ()
+	{
+		aud.Play ();
 	}
 }

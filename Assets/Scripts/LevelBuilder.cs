@@ -7,11 +7,11 @@ public class LevelBuilder : MonoBehaviour
 	public Object[] levels;
 	public List<int> builtLevels;
 
-	void Awake ()
+	void Start ()
 	{
 		builtLevels = new List<int> ();
 		DontDestroyOnLoad (gameObject);
-		levels = Resources.LoadAll ("Levels/");
+		StartCoroutine (LoadLevels ());
 	}
 	
 	public void Build (int level, Vector2 position)
@@ -26,6 +26,12 @@ public class LevelBuilder : MonoBehaviour
 			Instantiate (levels [level], position + Vector2.right * xOffset, Quaternion.identity);
 			builtLevels.Add (level);
 		}
+	}
+
+	IEnumerator LoadLevels ()
+	{
+		levels = Resources.LoadAll ("Levels/");
+		yield return new WaitForEndOfFrame ();
 	}
 
 	public void Reset ()
