@@ -33,7 +33,7 @@ public class BikeMovement : MonoBehaviour
 		aud = GetComponent<AudioSource> ();
 		ragdoll = (GameObject)Resources.Load ("Downed Rider");
 		body = GetComponent<Rigidbody2D> ();
-		body.centerOfMass = new Vector2 (-0.1f, -0.1f);
+		body.centerOfMass = new Vector2 (-0.1f, 0.4f);
 		rider = transform.FindChild ("Rider").gameObject;
 	}
 
