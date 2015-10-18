@@ -68,7 +68,7 @@ public class BikeMovement : MonoBehaviour
 			started = false;
 			fallen = true;
 			CancelInvoke ();
-			Invoke ("EnableReset", 1.0f);
+			Invoke ("EnableReset", 0.5f);
 			aud.PlayOneShot (crash);
 			rider.SetActive (false);
 			PlayerPrefs.SetInt ("Crashes", PlayerPrefs.GetInt ("Crashes") + 1);
@@ -172,6 +172,7 @@ public class BikeMovement : MonoBehaviour
 	void OnTriggerStay2D (Collider2D col)
 	{
 		rearWheelDown = true;
+		grounded = true;
 	}
 	
 	void OnTriggerExit2D (Collider2D col)
