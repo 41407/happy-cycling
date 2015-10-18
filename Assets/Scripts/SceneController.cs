@@ -10,6 +10,7 @@ public class SceneController : MonoBehaviour
 	private AudioSource aud;
 	public AudioClip levelStart;
 	private LevelBuilder builder;
+	public bool editorMode = false;
 
 	void Awake ()
 	{
@@ -43,10 +44,12 @@ public class SceneController : MonoBehaviour
 			paused = true;
 		}
 		if (PlayerHasCompletedLevel ()) {
-			int level = PlayerPrefs.GetInt ("Level") + 1;
-			PlayerPrefs.SetInt ("Level", level);
-			builder.Build (level, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth);
-			builder.Build (level + 1, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth * 2);
+			if (!editorMode) {
+				int level = PlayerPrefs.GetInt ("Level") + 1;
+				PlayerPrefs.SetInt ("Level", level);
+				builder.Build (level, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth);
+				builder.Build (level + 1, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth * 2);
+			}
 			cam.SendMessage ("Advance");
 		}
 		if (player.transform.position.y < -5) {
@@ -67,12 +70,14 @@ public class SceneController : MonoBehaviour
 
 	private void InitializeLevel ()
 	{
-		int level = PlayerPrefs.GetInt ("Level");
-		Debug.Log ("Initializing level " + level);
-		builder.Build (level - 1, cam.transform.position, -cam.GetComponent<CameraController>().levelWidth);
-		builder.Build (level, cam.transform.position);
-		builder.Build (level + 1, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth);
-		cam.SendMessage ("SetLevel", level);
+		if (!editorMode) {
+			int level = PlayerPrefs.GetInt ("Level");
+			Debug.Log ("Initializing level " + level);
+			builder.Build (level - 1, cam.transform.position, -cam.GetComponent<CameraController> ().levelWidth);
+			builder.Build (level, cam.transform.position);
+			builder.Build (level + 1, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth);
+			cam.SendMessage ("SetLevel", level);
+		}
 		SpawnPlayer ();
 	}
 
