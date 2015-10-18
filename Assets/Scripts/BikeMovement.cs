@@ -5,15 +5,19 @@ public class BikeMovement : MonoBehaviour
 {
 	private GameObject ragdoll;
 	public float maxSpeed = 5;
+	public float maxSpeedLerp = 0.1f;
+	public float currentMaxSpeed = 5;
 	public float acceleration = 15;
 	private Rigidbody2D body;
 	private GameObject rider;
 	public float groundedStaticTorque = 10;
-	public float groundedPumpStrength = 500;
+	public float groundedPumpTorque = 500;
+	public float pumpSpeedBoost = 3;
 	public float aerialPumpStrength = -100;
 	public float maxJumpStrength = 2000;
 	public float groundedJumpTorque = -50;
 	public float aerialJumpTorque = -100;
+	public float jumpSpeedBoost = 10;
 	private float jumpTorque;
 	private float jumpStrength = 0;
 	public float landStrength = 200;
@@ -41,10 +45,11 @@ public class BikeMovement : MonoBehaviour
 	{
 		if (started && grounded && rearWheelDown) {
 			body.AddTorque (groundedStaticTorque);
-			if (body.velocity.magnitude < maxSpeed) {
+			if (body.velocity.magnitude < currentMaxSpeed) {
 				body.AddForce (Vector2.right * acceleration);
 			}
 		}
+		currentMaxSpeed = Mathf.Lerp (currentMaxSpeed, maxSpeed, maxSpeedLerp); 
 	}
 	
 	void Go ()
@@ -93,7 +98,8 @@ public class BikeMovement : MonoBehaviour
 		aud.volume = 0.9f;
 		aud.Play ();
 		rider.SendMessage ("Pump", SendMessageOptions.DontRequireReceiver);
-		body.AddTorque (groundedPumpStrength);
+		body.AddTorque (groundedPumpTorque);
+		currentMaxSpeed += pumpSpeedBoost;
 		jumpStrength = maxJumpStrength;
 		jumpTorque = groundedJumpTorque;
 		InvokeRepeating ("AdjustJumpStrength", 0.50f, 0.016f);
@@ -138,6 +144,7 @@ public class BikeMovement : MonoBehaviour
 	void AerialJump ()
 	{
 		rider.SendMessage ("Jump", SendMessageOptions.DontRequireReceiver);
+		currentMaxSpeed += jumpSpeedBoost;
 		body.AddForce (Vector2.down * landStrength);
 		body.AddTorque (aerialJumpTorque);
 	}

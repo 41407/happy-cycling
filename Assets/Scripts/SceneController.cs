@@ -6,6 +6,7 @@ public class SceneController : MonoBehaviour
 	private GameObject playerPrefab;
 	private GameObject player;
 	private Camera cam;
+	private float levelWidth;
 	private bool paused = false;
 	private AudioSource aud;
 	public AudioClip levelStart;
@@ -17,6 +18,7 @@ public class SceneController : MonoBehaviour
 		aud = GetComponent<AudioSource> ();
 		playerPrefab = (GameObject)Resources.Load ("Player");
 		cam = Camera.main;
+		levelWidth = cam.GetComponent<CameraController> ().levelWidth;
 		builder = GameObject.Find ("Level Builder").GetComponent<LevelBuilder> ();
 	}
 
@@ -47,14 +49,19 @@ public class SceneController : MonoBehaviour
 			if (!editorMode) {
 				int level = PlayerPrefs.GetInt ("Level") + 1;
 				PlayerPrefs.SetInt ("Level", level);
-				builder.Build (level, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth);
-				builder.Build (level + 1, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth * 2);
+				builder.Build (level, cam.transform.position, levelWidth);
+				builder.Build (level + 1, cam.transform.position, levelWidth * 2);
 			}
 			cam.SendMessage ("Advance");
 		}
 		if (player.transform.position.y < -5) {
 			player.SendMessage ("Fall");
 		}
+		DebugKeyCommands ();
+	}
+
+	void DebugKeyCommands ()
+	{
 		if (Input.GetKeyDown (KeyCode.R) && Input.GetKey (KeyCode.LeftShift)) {
 			PlayerPrefs.SetInt ("Level", 0);
 			PlayerPrefs.SetInt ("Crashes", 0);
@@ -73,9 +80,9 @@ public class SceneController : MonoBehaviour
 		if (!editorMode) {
 			int level = PlayerPrefs.GetInt ("Level");
 			Debug.Log ("Initializing level " + level);
-			builder.Build (level - 1, cam.transform.position, -cam.GetComponent<CameraController> ().levelWidth);
+			builder.Build (level - 1, cam.transform.position, -levelWidth);
 			builder.Build (level, cam.transform.position);
-			builder.Build (level + 1, cam.transform.position, cam.GetComponent<CameraController> ().levelWidth);
+			builder.Build (level + 1, cam.transform.position, levelWidth);
 			cam.SendMessage ("SetLevel", level);
 		}
 		SpawnPlayer ();
