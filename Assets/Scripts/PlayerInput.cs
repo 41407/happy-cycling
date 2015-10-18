@@ -4,10 +4,17 @@ using System.Collections;
 public class PlayerInput : MonoBehaviour
 {
 	private bool paused = false;
+	public bool mouseControlled = true;
 
 	void Update ()
 	{
 		if (!paused) {
+			if((mouseControlled && Input.GetKey (KeyCode.Space)) || (!mouseControlled && Input.GetMouseButton(0))) {
+				mouseControlled = !mouseControlled;
+				paused = true;
+				Invoke ("Continue", 0.5f);
+				return;
+			}
 			if (Input.GetMouseButtonDown (0) || Input.GetKeyDown (KeyCode.Space)) {
 				SendMessage ("Pump");
 			}
