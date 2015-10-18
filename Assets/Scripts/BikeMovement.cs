@@ -172,7 +172,6 @@ public class BikeMovement : MonoBehaviour
 	void OnTriggerStay2D (Collider2D col)
 	{
 		rearWheelDown = true;
-		grounded = true;
 	}
 	
 	void OnTriggerExit2D (Collider2D col)
