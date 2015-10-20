@@ -13,7 +13,7 @@ public class GroundTouchParticles : MonoBehaviour
 	void Awake ()
 	{
 		aud = GetComponent<AudioSource> ();
-		groundParticle = (GameObject)Resources.Load ("Ground Particle");
+		groundParticle = (GameObject)Resources.Load ("Prefabs/Ground Particle");
 	}
 	
 	void OnCollisionEnter2D (Collision2D col)

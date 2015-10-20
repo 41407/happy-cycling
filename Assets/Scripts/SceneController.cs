@@ -16,7 +16,7 @@ public class SceneController : MonoBehaviour
 	void Awake ()
 	{
 		aud = GetComponent<AudioSource> ();
-		playerPrefab = (GameObject)Resources.Load ("Player");
+		playerPrefab = (GameObject)Resources.Load ("Prefabs/Player");
 		cam = Camera.main;
 		levelWidth = cam.GetComponent<CameraController> ().levelWidth;
 		builder = GameObject.Find ("Level Builder").GetComponent<LevelBuilder> ();

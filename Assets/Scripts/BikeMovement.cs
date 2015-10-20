@@ -35,7 +35,7 @@ public class BikeMovement : MonoBehaviour
 	void Awake ()
 	{
 		aud = GetComponent<AudioSource> ();
-		ragdoll = (GameObject)Resources.Load ("Downed Rider");
+		ragdoll = (GameObject)Resources.Load ("Prefabs/Downed Rider");
 		body = GetComponent<Rigidbody2D> ();
 		body.centerOfMass = new Vector2 (-0.1f, 0.4f);
 		rider = transform.FindChild ("Rider").gameObject;
