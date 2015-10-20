@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BikeMovement : MonoBehaviour
+public class BikeController : MonoBehaviour
 {
 	private GameObject ragdoll;
 	public float maxSpeed = 5;
-	public float maxSpeedLerp = 0.1f;
+	public float maxSpeedLerp = 0.01f;
 	public float currentMaxSpeed = 5;
 	public float acceleration = 15;
 	private Rigidbody2D body;
 	private GameObject rider;
-	public float groundedStaticTorque = 10;
+	public float groundedStaticTorque = 0.1f;
 	public float groundedPumpTorque = 500;
 	public float pumpSpeedBoost = 3;
 	public float aerialPumpStrength = -100;
 	public float maxJumpStrength = 2000;
 	public float groundedJumpTorque = -50;
 	public float aerialJumpTorque = -100;
-	public float jumpSpeedBoost = 10;
+	public float jumpSpeedBoost = 3;
 	private float jumpTorque;
 	private float jumpStrength = 0;
 	public float landStrength = 200;
@@ -25,8 +25,8 @@ public class BikeMovement : MonoBehaviour
 	private bool grounded;
 	public bool fallen = false;
 	private bool resetEnabled = false;
-	public float ungroundGraceTime = 0.10f;
-	private bool rearWheelDown = false;
+	public float ungroundGraceTime = 0.05f;
+	private bool rearWheelDown = true;
 	public AudioClip pump;
 	public AudioClip jump;
 	public AudioClip crash;

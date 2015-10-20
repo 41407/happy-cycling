@@ -98,7 +98,7 @@ public class SceneController : MonoBehaviour
 	private bool PlayerHasCompletedLevel ()
 	{
 		return (player.transform.position.x > Camera.main.transform.position.x + 7.5f)
-			&& !player.GetComponent<BikeMovement> ().fallen
+			&& !player.GetComponent<BikeController> ().fallen
 			&& CameraNotPanning ();
 	}
 
