@@ -11,6 +11,9 @@ public class PlayerInput : MonoBehaviour
 		if (!paused) {
 			if((mouseControlled && Input.GetKey (KeyCode.Space)) || (!mouseControlled && Input.GetMouseButton(0))) {
 				mouseControlled = !mouseControlled;
+				if(!mouseControlled) {
+					UnityEngine.Cursor.visible = false;
+				}
 				paused = true;
 				Invoke ("Continue", 0.5f);
 				return;
