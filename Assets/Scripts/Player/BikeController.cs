@@ -102,6 +102,7 @@ public class BikeController : MonoBehaviour
 		currentMaxSpeed += pumpSpeedBoost;
 		jumpStrength = maxJumpStrength;
 		jumpTorque = groundedJumpTorque;
+		CancelInvoke ();
 		InvokeRepeating ("AdjustJumpStrength", 0.50f, 0.016f);
 	}
 
