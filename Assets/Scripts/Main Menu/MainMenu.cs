@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour
 
 	void LoadGame ()
 	{
+		PlayerPrefs.SetInt ("Level", 0);
+		Score.Reset ();
 		async = Application.LoadLevelAsync (sceneName);
 	}
 
@@ -27,13 +29,11 @@ public class MainMenu : MonoBehaviour
 
 	void Update ()
 	{
-		if (Input.anyKeyDown && state >= 3) {
+		if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && state >= 3) {
 			LoadGame ();
 		}
 		if (async != null) {
 			if (async.isDone) {
-				PlayerPrefs.SetInt ("Level", 0);
-				Score.Reset ();
 				GameObject.Find ("Music").SendMessage ("Play");
 				Destroy (gameObject);
 			}

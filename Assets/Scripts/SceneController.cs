@@ -62,7 +62,8 @@ public class SceneController : MonoBehaviour
 			player.SendMessage ("Fall");
 		}
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			Application.LoadLevelAsync ("init");
+			builder.Reset ();
+			Application.LoadLevelAsync ("Main Menu");
 		}
 		levelTimeElapsed += Time.deltaTime;
 		DebugKeyCommands ();
