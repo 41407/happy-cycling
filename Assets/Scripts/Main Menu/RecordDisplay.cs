@@ -5,16 +5,15 @@ public class RecordDisplay : MonoBehaviour
 {
 
 	public float startTranslateTime = 0;
-	private Vector2 targetPosition;
+	private Vector3 targetPosition;
 	public Vector3 finalPosition;
 	public float finishTime = 1;
 
 	void Start ()
 	{
 		if (!PlayerPrefs.HasKey ("TimeRecord")) {
-			Destroy (this);
+			Invoke ("StartTranslate", startTranslateTime);
 		}
-		Invoke ("StartTranslate", startTranslateTime);
 		targetPosition = transform.position;
 	}
 	
@@ -38,9 +37,9 @@ public class RecordDisplay : MonoBehaviour
 
 	void Update ()
 	{
-		if (Input.anyKeyDown) {
+		if (Input.anyKeyDown && PlayerPrefs.HasKey ("TimeRecord")) {
 			StartTranslate (0);
 		}
-		transform.position = Vector2.Lerp (transform.position, targetPosition, 0.1f);
+		transform.position = Vector3.Lerp (transform.position, targetPosition, 0.1f);
 	}
 }

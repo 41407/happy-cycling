@@ -121,7 +121,7 @@ public class BikeController : MonoBehaviour
 
 	void Jump ()
 	{
-		if (started && grounded && !fallen) {
+		if (grounded && !fallen) {
 			CancelInvoke ();
 			GroundJump ();
 		}
