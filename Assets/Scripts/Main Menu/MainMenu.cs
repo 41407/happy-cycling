@@ -12,6 +12,8 @@ public class MainMenu : MonoBehaviour
 	{
 		DontDestroyOnLoad (gameObject);
 		PlayerPrefs.SetInt ("Level", 0);
+		GameObject.Find ("Player").SendMessage ("Go");
+		GameObject.Find ("Music").SendMessage ("Stop");
 	}
 
 	void LoadGame ()
@@ -26,7 +28,7 @@ public class MainMenu : MonoBehaviour
 
 	void Update ()
 	{
-		if (Input.anyKeyDown && state == 3) {
+		if (Input.anyKeyDown && state >= 3) {
 			LoadGame ();
 		}
 		if (async != null) {

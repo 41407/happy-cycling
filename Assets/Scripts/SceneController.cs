@@ -57,6 +57,9 @@ public class SceneController : MonoBehaviour
 		if (player.transform.position.y < -5) {
 			player.SendMessage ("Fall");
 		}
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.LoadLevelAsync ("init");
+		}
 		DebugKeyCommands ();
 	}
 

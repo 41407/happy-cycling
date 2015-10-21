@@ -18,9 +18,14 @@ public class MusicController : MonoBehaviour
 			aud.volume = (aud.volume > 0) ? 0 : 0.7f;
 		}
 	}
-
+	
 	void Play ()
 	{
 		aud.Play ();
+	}
+	
+	void Stop ()
+	{
+		aud.Stop ();
 	}
 }
