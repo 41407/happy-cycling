@@ -1,0 +1,46 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class RecordDisplay : MonoBehaviour
+{
+
+	public float startTranslateTime = 0;
+	private Vector2 targetPosition;
+	public Vector3 finalPosition;
+	public float finishTime = 1;
+
+	void Start ()
+	{
+		if (!PlayerPrefs.HasKey ("TimeRecord")) {
+			Destroy (this);
+		}
+		Invoke ("StartTranslate", startTranslateTime);
+		targetPosition = transform.position;
+	}
+	
+	void StartTranslate ()
+	{
+		StartTranslate (finishTime);
+	}
+	
+	void StartTranslate (float finish)
+	{
+		targetPosition = finalPosition;
+		Invoke ("Finish", finish);
+	}
+
+	void Finish ()
+	{
+		transform.position = targetPosition;
+		GameObject.Find ("Main Menu").SendMessage ("Advance");
+		Destroy (this);
+	}
+
+	void Update ()
+	{
+		if (Input.anyKeyDown) {
+			StartTranslate (0);
+		}
+		transform.position = Vector2.Lerp (transform.position, targetPosition, 0.1f);
+	}
+}
