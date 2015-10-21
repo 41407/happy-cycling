@@ -11,8 +11,6 @@ public class MainMenu : MonoBehaviour
 	void Start ()
 	{
 		DontDestroyOnLoad (gameObject);
-		PlayerPrefs.SetInt ("Level", 0);
-		Score.Reset ();
 		GameObject.Find ("Player").SendMessage ("Go");
 		GameObject.Find ("Music").SendMessage ("Stop");
 	}
@@ -34,6 +32,8 @@ public class MainMenu : MonoBehaviour
 		}
 		if (async != null) {
 			if (async.isDone) {
+				PlayerPrefs.SetInt ("Level", 0);
+				Score.Reset ();
 				GameObject.Find ("Music").SendMessage ("Play");
 				Destroy (gameObject);
 			}
