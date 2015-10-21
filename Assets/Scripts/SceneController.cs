@@ -88,7 +88,6 @@ public class SceneController : MonoBehaviour
 	{
 		if (!editorMode) {
 			int level = PlayerPrefs.GetInt ("Level");
-			Debug.Log ("Initializing level " + level);
 			builder.Build (level - 1, cam.transform.position, -levelWidth);
 			builder.Build (level, cam.transform.position);
 			builder.Build (level + 1, cam.transform.position, levelWidth);
