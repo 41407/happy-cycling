@@ -71,7 +71,7 @@ public class BikeController : MonoBehaviour
 			Invoke ("EnableReset", 0.5f);
 			aud.PlayOneShot (crash);
 			rider.SetActive (false);
-			Score.AddCrash();
+			Score.AddCrash ();
 			InstantiateRagdoll ();
 		}
 	}
@@ -161,7 +161,8 @@ public class BikeController : MonoBehaviour
 
 	void OnCollisionExit2D (Collision2D col)
 	{
-		Invoke ("LeaveGround", ungroundGraceTime);
+		//Invoke ("LeaveGround", ungroundGraceTime);
+		LeaveGround ();
 	}
 
 	void LeaveGround ()

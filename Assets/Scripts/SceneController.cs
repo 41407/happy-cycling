@@ -7,7 +7,7 @@ public class SceneController : MonoBehaviour
 	private GameObject player;
 	private Camera cam;
 	private float levelWidth;
-	private bool paused = false;
+	public bool paused = false;
 	private AudioSource aud;
 	public AudioClip levelStart;
 	private LevelBuilder builder;

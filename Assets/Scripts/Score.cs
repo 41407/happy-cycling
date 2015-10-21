@@ -25,7 +25,6 @@ public static class Score
 	public static void AddTime (float elapsed)
 	{
 		time += elapsed;
-		Debug.Log (time);
 	}
 
 	public static float GetTime ()
