@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
 
 	void Update ()
 	{
-		if (Input.anyKeyDown && state == 2) {
+		if (Input.anyKeyDown && state == 3) {
 			LoadGame ();
 		}
 		if (async != null) {
