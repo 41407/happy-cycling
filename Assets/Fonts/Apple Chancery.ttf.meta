@@ -4,15 +4,15 @@ timeCreated: 1444916747
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 2
-  fontSize: 16
-  forceTextureCase: -2
+  fontSize: 72
+  forceTextureCase: 3
   characterSpacing: 1
   characterPadding: 0
   includeFontData: 0
   use2xBehaviour: 0
   fontNames: []
   fallbackFontReferences: []
-  customCharacters: 
+  customCharacters: 1234567890:;.,
   fontRenderingMode: 2
   userData: 
   assetBundleName: 
