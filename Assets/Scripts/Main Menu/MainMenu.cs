@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
 	{
 		DontDestroyOnLoad (gameObject);
 		PlayerPrefs.SetInt ("Level", 0);
+		Score.Reset ();
 		GameObject.Find ("Player").SendMessage ("Go");
 		GameObject.Find ("Music").SendMessage ("Stop");
 	}

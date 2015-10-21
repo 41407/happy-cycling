@@ -12,6 +12,7 @@ public class SceneController : MonoBehaviour
 	public AudioClip levelStart;
 	private LevelBuilder builder;
 	public bool editorMode = false;
+	private float levelTimeElapsed = 0;
 
 	void Awake ()
 	{
@@ -19,7 +20,7 @@ public class SceneController : MonoBehaviour
 		playerPrefab = (GameObject)Resources.Load ("Prefabs/Player");
 		cam = Camera.main;
 		levelWidth = cam.GetComponent<CameraController> ().levelWidth;
-		builder = GameObject.Find ("Level Builder").GetComponent<LevelBuilder> ();
+		builder = GameObject.Find ("Game Controller").GetComponent<LevelBuilder> ();
 	}
 
 	void Start ()
@@ -30,6 +31,7 @@ public class SceneController : MonoBehaviour
 
 	void Restart ()
 	{
+		Score.AddTime (levelTimeElapsed);
 		builder.Reset ();
 		Application.LoadLevel (Application.loadedLevel);
 	}
@@ -40,6 +42,7 @@ public class SceneController : MonoBehaviour
 			Time.timeScale = 1;
 			player.SendMessage ("Continue");
 			paused = false;
+			levelTimeElapsed = 0;
 		} else if (!CameraNotPanning ()) {
 			Time.timeScale = 0;
 			player.SendMessage ("Pause");
@@ -51,6 +54,7 @@ public class SceneController : MonoBehaviour
 				PlayerPrefs.SetInt ("Level", level);
 				builder.Build (level, cam.transform.position, levelWidth);
 				builder.Build (level + 1, cam.transform.position, levelWidth * 2);
+				Score.AddTime(levelTimeElapsed);
 			}
 			cam.SendMessage ("Advance");
 		}
@@ -60,6 +64,7 @@ public class SceneController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			Application.LoadLevelAsync ("init");
 		}
+		levelTimeElapsed += Time.deltaTime;
 		DebugKeyCommands ();
 	}
 
