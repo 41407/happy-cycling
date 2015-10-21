@@ -32,6 +32,10 @@ public class MainMenu : MonoBehaviour
 		if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && state >= 3) {
 			LoadGame ();
 		}
+		
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Application.Quit ();
+		}
 		if (async != null) {
 			if (async.isDone) {
 				GameObject.Find ("Music").SendMessage ("Play");
