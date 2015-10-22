@@ -23,11 +23,13 @@ public class TheEnd : MonoBehaviour
 
 	bool TimeRecord ()
 	{
-		return PlayerPrefs.GetFloat ("TimeRecord") > Score.GetTime ();
+		print ("New time record!");
+		return !PlayerPrefs.HasKey ("TimeRecord") || PlayerPrefs.GetFloat ("TimeRecord") > Score.GetTime ();
 	}
 
 	bool CrashesRecord ()
 	{
-		return PlayerPrefs.GetInt ("CrashesRecord") > Score.GetCrashes ();
+		print ("New crashes record!");
+		return !PlayerPrefs.HasKey ("CrashesRecord") || PlayerPrefs.GetInt ("CrashesRecord") > Score.GetCrashes ();
 	}
 }

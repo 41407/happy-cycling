@@ -11,7 +11,7 @@ public class RecordDisplay : MonoBehaviour
 
 	void Start ()
 	{
-		if (!PlayerPrefs.HasKey ("TimeRecord")) {
+		if (PlayerPrefs.HasKey ("TimeRecord")) {
 			Invoke ("StartTranslate", startTranslateTime);
 		}
 		targetPosition = transform.position;
