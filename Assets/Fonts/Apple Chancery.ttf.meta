@@ -5,7 +5,7 @@ licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 2
   fontSize: 72
-  forceTextureCase: 3
+  forceTextureCase: -2
   characterSpacing: 1
   characterPadding: 0
   includeFontData: 0
