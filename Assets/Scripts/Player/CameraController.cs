@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
+	private SceneController sc;
 	public float targetX = 0;
 	public float levelWidth = 16;
 	public float panSpeed = 10f;
@@ -10,6 +11,7 @@ public class CameraController : MonoBehaviour
 
 	void Awake ()
 	{
+		sc = GameObject.Find ("Scene Controller").GetComponent<SceneController>();
 		SetLevel (PlayerPrefs.GetInt ("Level"));
 	}
 
@@ -20,6 +22,7 @@ public class CameraController : MonoBehaviour
 			transform.Translate (Vector3.right * panSpeed);
 		} else {
 			panning = false;
+			sc.SendMessage("CameraFinishedPanning");
 		}
 	}
 

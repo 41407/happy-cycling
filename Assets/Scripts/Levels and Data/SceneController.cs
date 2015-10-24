@@ -38,24 +38,15 @@ public class SceneController : MonoBehaviour
 
 	void Update ()
 	{
-		if (CameraNotPanning () && paused) {
-			Time.timeScale = 1;
-			player.SendMessage ("Continue");
-			paused = false;
-			levelTimeElapsed = 0;
-		} else if (!CameraNotPanning ()) {
-			Time.timeScale = 0;
-			player.SendMessage ("Pause");
-			paused = true;
-		}
 		if (PlayerHasCompletedLevel ()) {
 			if (!editorMode) {
 				int level = PlayerPrefs.GetInt ("Level") + 1;
 				PlayerPrefs.SetInt ("Level", level);
+				Score.AddTime (levelTimeElapsed);
 				builder.Build (level, cam.transform.position, levelWidth);
 				builder.Build (level + 1, cam.transform.position, levelWidth * 2);
-				Score.AddTime(levelTimeElapsed);
 			}
+			SetPaused (true);
 			cam.SendMessage ("Advance");
 		}
 		if (player.transform.position.y < -5) {
@@ -81,7 +72,27 @@ public class SceneController : MonoBehaviour
 		} else if (Input.GetKeyDown (KeyCode.T)) {
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") + 1);
 			Restart ();
+		} else if (Input.GetKeyDown (KeyCode.P)) {
+			SetPaused (!paused);
 		}
+	}
+
+	private void SetPaused (bool pause)
+	{
+		if (pause) {
+			Time.timeScale = 0;
+			player.SendMessage ("Pause");
+		} else {
+			Time.timeScale = 1;
+			player.SendMessage ("Continue");
+		}
+		paused = pause;
+	}
+
+	private void CameraFinishedPanning ()
+	{
+		SetPaused (false);
+		levelTimeElapsed = 0;
 	}
 
 	private void InitializeLevel ()
