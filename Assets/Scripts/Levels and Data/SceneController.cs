@@ -39,6 +39,7 @@ public class SceneController : MonoBehaviour
 	void Update ()
 	{
 		if (PlayerHasCompletedLevel ()) {
+			SetPaused (true);
 			if (!editorMode) {
 				int level = PlayerPrefs.GetInt ("Level") + 1;
 				PlayerPrefs.SetInt ("Level", level);
@@ -47,7 +48,6 @@ public class SceneController : MonoBehaviour
 				builder.Build (level, cam.transform.position, levelWidth);
 				builder.Build (level + 1, cam.transform.position, levelWidth * 2);
 			}
-			SetPaused (true);
 			cam.SendMessage ("Advance");
 		}
 		if (player.transform.position.y < -5) {
@@ -83,11 +83,11 @@ public class SceneController : MonoBehaviour
 	private void SetPaused (bool pause)
 	{
 		if (pause) {
-			Time.timeScale = 0;
 			player.SendMessage ("Pause");
+			Time.timeScale = 0;
 		} else {
-			Time.timeScale = 1;
 			player.SendMessage ("Continue");
+			Time.timeScale = 1;
 		}
 		paused = pause;
 	}

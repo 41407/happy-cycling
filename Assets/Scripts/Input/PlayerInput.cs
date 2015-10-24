@@ -9,6 +9,18 @@ public class PlayerInput : MonoBehaviour
 	void Update ()
 	{
 		if (!paused) {
+			if (KeyDown ()) {
+				print ("Pumped");
+				SendMessage ("Pump");
+			}
+			if (KeyUp ()) {
+				print ("Jumped");
+				SendMessage ("Go");
+				SendMessage ("Jump");
+			}
+			if (Input.GetKeyDown (KeyCode.E)) {
+				SendMessage ("Fall");
+			}
 			if ((mouseControlled && Input.GetKey (KeyCode.Space)) || (!mouseControlled && Input.GetMouseButton (0))) {
 				mouseControlled = !mouseControlled;
 				if (!mouseControlled) {
@@ -16,17 +28,6 @@ public class PlayerInput : MonoBehaviour
 				}
 				paused = true;
 				Invoke ("Continue", 0.5f);
-				return;
-			}
-			if (KeyDown ()) {
-				SendMessage ("Pump");
-			}
-			if (KeyUp ()) {
-				SendMessage ("Go");
-				SendMessage ("Jump");
-			}
-			if (Input.GetKeyDown (KeyCode.E)) {
-				SendMessage ("Fall");
 			}
 		}
 	}
@@ -48,11 +49,13 @@ public class PlayerInput : MonoBehaviour
 
 	void Pause ()
 	{
+		print ("Paused");
 		paused = true;
 	}
 
 	void Continue ()
 	{
+		print ("Continued");
 		paused = false;
 		if (!KeyPressed ()) {
 			SendMessage ("Go");
