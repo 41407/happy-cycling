@@ -16,16 +16,16 @@ public class PressAndHoldToLift : MonoBehaviour
 	{
 		if (!player) {
 			player = GameObject.FindGameObjectWithTag ("Player");
-
-		}
-		if ((player.transform.position.x > transform.position.x && player.transform.position.x < transform.position.x + 1) && tutorialTriggered == false) {
-			sc.SendMessage ("SetPaused", true);
-			tutorialTriggered = true;
-			transform.GetChild (0).gameObject.SetActive (true);
-		}
-		if (tutorialTriggered == true && (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0))) {
-			sc.SendMessage ("SetPaused", false);
-			Destroy (gameObject);
+		} else if (!player.GetComponent<BikeController> ().fallen) {
+			if ((player.transform.position.x > transform.position.x && player.transform.position.x < transform.position.x + 1) && tutorialTriggered == false) {
+				sc.SendMessage ("SetPaused", true);
+				tutorialTriggered = true;
+				transform.GetChild (0).gameObject.SetActive (true);
+			}
+			if (tutorialTriggered == true && (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0))) {
+				sc.SendMessage ("SetPaused", false);
+				Destroy (gameObject);
+			}
 		}
 	}
 }
