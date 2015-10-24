@@ -6,7 +6,6 @@ public class TimeCounter : MonoBehaviour
 {
 	private Text t;
 	private SceneController sc;
-	private float localTime = 0;
 	private bool visible = false;
 
 	void Awake ()
@@ -17,19 +16,13 @@ public class TimeCounter : MonoBehaviour
 
 	void Start ()
 	{
-		localTime = Score.GetTime ();
 		SetVisible ();
 	}
 
 	void Update ()
 	{
 		if (visible) {
-			t.text = SecondsToString(localTime);
-			if (sc.paused) {
-				localTime = Score.GetTime ();
-			} else {
-				localTime += Time.deltaTime;
-			}
+			t.text = SecondsToString (sc.levelTimeElapsed + Score.GetTime());
 		} else {
 			t.text = "";
 		}
@@ -39,11 +32,11 @@ public class TimeCounter : MonoBehaviour
 		}
 	}
 
-	string SecondsToString(float seconds) 
+	string SecondsToString (float seconds)
 	{
 		seconds = (float)System.Math.Round (seconds, 2, System.MidpointRounding.AwayFromZero);
 		int minutes = 0;
-		while(seconds > 60) {
+		while (seconds > 60) {
 			seconds -= 60;
 			minutes++;
 		}

@@ -12,7 +12,7 @@ public class SceneController : MonoBehaviour
 	public AudioClip levelStart;
 	private LevelBuilder builder;
 	public bool editorMode = false;
-	private float levelTimeElapsed = 0;
+	public float levelTimeElapsed = 0;
 
 	void Awake ()
 	{
@@ -43,6 +43,7 @@ public class SceneController : MonoBehaviour
 				int level = PlayerPrefs.GetInt ("Level") + 1;
 				PlayerPrefs.SetInt ("Level", level);
 				Score.AddTime (levelTimeElapsed);
+				levelTimeElapsed = 0;
 				builder.Build (level, cam.transform.position, levelWidth);
 				builder.Build (level + 1, cam.transform.position, levelWidth * 2);
 			}
@@ -56,7 +57,9 @@ public class SceneController : MonoBehaviour
 			builder.Reset ();
 			Application.LoadLevelAsync ("Main Menu");
 		}
-		levelTimeElapsed += Time.deltaTime;
+		if (!paused) {
+			levelTimeElapsed += Time.deltaTime;
+		}
 		DebugKeyCommands ();
 	}
 
@@ -92,7 +95,6 @@ public class SceneController : MonoBehaviour
 	private void CameraFinishedPanning ()
 	{
 		SetPaused (false);
-		levelTimeElapsed = 0;
 	}
 
 	private void InitializeLevel ()
