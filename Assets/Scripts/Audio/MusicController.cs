@@ -5,6 +5,7 @@ public class MusicController : MonoBehaviour
 {
 	private AudioSource aud;
 	public bool musicOn = true;
+	public float volume = 0.7f;
 
 	void Awake ()
 	{
@@ -15,7 +16,7 @@ public class MusicController : MonoBehaviour
 	void Update ()
 	{
 		if (Input.GetKeyDown (KeyCode.M)) {
-			aud.volume = (aud.volume > 0) ? 0 : 0.7f;
+			aud.volume = (aud.volume > 0) ? 0 : volume;
 		}
 	}
 	
