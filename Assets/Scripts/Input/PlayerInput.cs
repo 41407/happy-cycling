@@ -10,11 +10,9 @@ public class PlayerInput : MonoBehaviour
 	{
 		if (!paused) {
 			if (KeyDown ()) {
-				print ("Pumped");
 				SendMessage ("Pump");
 			}
 			if (KeyUp ()) {
-				print ("Jumped");
 				SendMessage ("Go");
 				SendMessage ("Jump");
 			}
@@ -49,13 +47,11 @@ public class PlayerInput : MonoBehaviour
 
 	void Pause ()
 	{
-		print ("Paused");
 		paused = true;
 	}
 
 	void Continue ()
 	{
-		print ("Continued");
 		paused = false;
 		if (!KeyPressed ()) {
 			SendMessage ("Go");
