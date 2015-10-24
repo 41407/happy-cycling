@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
 		if (transform.position.x < targetX) {
 			panning = true;
 			transform.Translate (Vector3.right * panSpeed);
-		} else {
+		} else if (panning) {
 			panning = false;
 			sc.SendMessage("CameraFinishedPanning");
 		}
