@@ -114,6 +114,7 @@ public class SceneController : MonoBehaviour
 		Vector2 viewTopLeftCorner = Vector2.left * 7.0f + Vector2.up * 4.5f;
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopLeftCorner, Vector2.down);
 		player = (GameObject)Instantiate (playerPrefab, hit.point, Quaternion.identity);
+		player.SendMessage ("GoAfterDelay", 0.16f);
 	}
 
 	private bool PlayerHasCompletedLevel ()

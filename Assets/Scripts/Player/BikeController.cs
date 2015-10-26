@@ -62,6 +62,11 @@ public class BikeController : MonoBehaviour
 		}
 	}
 
+	void GoAfterDelay (float time)
+	{
+		Invoke ("Go", time);
+	}
+
 	void Fall ()
 	{
 		if (!fallen) {

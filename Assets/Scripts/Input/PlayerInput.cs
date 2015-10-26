@@ -35,12 +35,12 @@ public class PlayerInput : MonoBehaviour
 		return Input.GetMouseButtonDown (0) || Input.GetKeyDown (KeyCode.Space);
 	}
 	
-	static bool KeyUp ()
+	private bool KeyUp ()
 	{
 		return Input.GetMouseButtonUp (0) || Input.GetKeyUp (KeyCode.Space);
 	}
 	
-	static bool KeyPressed ()
+	private bool KeyPressed ()
 	{
 		return Input.GetMouseButton (0) || Input.GetKey (KeyCode.Space);
 	}
