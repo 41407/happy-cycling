@@ -4,6 +4,7 @@ using System.Collections;
 public class SceneController : MonoBehaviour
 {
 	private GameObject playerPrefab;
+	private GameObject catPrefab;
 	private GameObject player;
 	private Camera cam;
 	private float levelWidth;
@@ -18,6 +19,7 @@ public class SceneController : MonoBehaviour
 	{
 		aud = GetComponent<AudioSource> ();
 		playerPrefab = (GameObject)Resources.Load ("Prefabs/Player");
+		catPrefab = (GameObject)Resources.Load ("Prefabs/Cat");
 		cam = Camera.main;
 		levelWidth = cam.GetComponent<CameraController> ().levelWidth;
 		builder = GameObject.Find ("Game Controller").GetComponent<LevelBuilder> ();
@@ -47,6 +49,7 @@ public class SceneController : MonoBehaviour
 				levelTimeElapsed = 0;
 				builder.Build (level, cam.transform.position, levelWidth);
 				builder.Build (level + 1, cam.transform.position, levelWidth * 2);
+				SpawnCat ();
 			}
 			cam.SendMessage ("Advance");
 		}
@@ -108,13 +111,22 @@ public class SceneController : MonoBehaviour
 		}
 		SpawnPlayer ();
 	}
-
+	
 	private void SpawnPlayer ()
 	{
 		Vector2 viewTopLeftCorner = Vector2.left * 7.0f + Vector2.up * 4.5f;
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopLeftCorner, Vector2.down);
 		player = (GameObject)Instantiate (playerPrefab, hit.point, Quaternion.identity);
 		player.SendMessage ("GoAfterDelay", 0.16f);
+	}
+
+	private void SpawnCat ()
+	{
+		Vector2 viewTopRightCorner = Vector2.right * (7.0f + levelWidth) + Vector2.up * 4.5f;
+		RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopRightCorner, Vector2.down);
+		if (hit.normal.Equals (Vector2.up)) {
+			GameObject cat = (GameObject)Instantiate (catPrefab, hit.point, Quaternion.identity);
+		}
 	}
 
 	private bool PlayerHasCompletedLevel ()
