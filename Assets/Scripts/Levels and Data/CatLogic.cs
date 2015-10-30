@@ -7,13 +7,14 @@ public class CatLogic : MonoBehaviour
 	public float fleeDistance = 2.0f;
 	public bool fleeing = false;
 	public float fleeSpeed = 5.0f;
+	public float destroyTimeout = 1.5f;
 	public Sprite idle;
 	public Sprite jumping;
 	private SpriteRenderer rend;
 
 	void Awake ()
 	{
-		rend = GetComponent<SpriteRenderer> ();
+		rend = GetComponentInChildren<SpriteRenderer> ();
 		rend.sprite = idle;
 	}
 
@@ -33,6 +34,7 @@ public class CatLogic : MonoBehaviour
 
 	void Flee ()
 	{
+		Destroy (gameObject, destroyTimeout);
 		rend.sprite = jumping;
 		fleeing = true;
 	}

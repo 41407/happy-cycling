@@ -127,7 +127,7 @@ public class SceneController : MonoBehaviour
 			Vector2 viewTopRightCorner = Vector2.right * (7.0f + levelWidth) + Vector2.up * 4.5f;
 			RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopRightCorner, Vector2.down);
 			Vector2 normal = hit.normal;
-			GameObject cat = (GameObject)Instantiate (catPrefab, hit.point, Quaternion.LookRotation(normal, Vector3.forward));	
+			GameObject cat = (GameObject)Instantiate (catPrefab, hit.point, Quaternion.LookRotation(normal, Vector3.back));	
 		}
 	}
 
