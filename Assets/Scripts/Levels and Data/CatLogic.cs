@@ -11,10 +11,12 @@ public class CatLogic : MonoBehaviour
 	public Sprite idle;
 	public Sprite jumping;
 	private SpriteRenderer rend;
+	private Animator anim;
 
 	void Awake ()
 	{
 		rend = GetComponentInChildren<SpriteRenderer> ();
+		anim = GetComponentInChildren<Animator> ();
 		rend.sprite = idle;
 	}
 
@@ -36,6 +38,7 @@ public class CatLogic : MonoBehaviour
 	{
 		Destroy (gameObject, destroyTimeout);
 		rend.sprite = jumping;
+		anim.enabled = true;
 		fleeing = true;
 	}
 
