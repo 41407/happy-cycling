@@ -167,13 +167,12 @@ public class BikeController : MonoBehaviour
 
 	void OnCollisionExit2D (Collision2D col)
 	{
-		//Invoke ("LeaveGround", ungroundGraceTime);
-		LeaveGround ();
+		Invoke ("LeaveGround", ungroundGraceTime);
 	}
 
 	void LeaveGround ()
 	{
-		//grounded = false;
+		grounded = false;
 	}
 	
 	void OnTriggerStay2D (Collider2D col)
