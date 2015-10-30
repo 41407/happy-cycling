@@ -3,21 +3,36 @@ using System.Collections;
 
 public class TheEnd : MonoBehaviour
 {
+	private SceneController sc;
+	private GameObject player;
+	private bool finished = false;
 
-	void Start ()
+	void Awake ()
 	{
+		sc = GameObject.Find ("Scene Controller").GetComponent<SceneController> ();
+	}
+
+	void Update ()
+	{
+		if (!player) {
+			player = GameObject.FindGameObjectWithTag ("Player");
+		} else if (player.transform.position.x > transform.position.x) {
+			OnPlayerEnter ();
+		}
+		if (finished && Input.anyKeyDown) {
+			Application.LoadLevelAsync ("Main Menu");
+		}
+	}
+
+	void OnPlayerEnter ()
+	{
+		player.SendMessage ("Pause");
+		player.AddComponent<EndingScript> ();
 		if (TimeRecord ()) {
 			PlayerPrefs.SetFloat ("TimeRecord", Score.GetTime ());
 		}
 		if (CrashesRecord ()) {
 			PlayerPrefs.SetInt ("CrashesRecord", Score.GetCrashes ());
-		}
-	}
-
-	void Update ()
-	{
-		if (Input.anyKeyDown) {
-			Application.LoadLevelAsync ("Main Menu");
 		}
 	}
 
