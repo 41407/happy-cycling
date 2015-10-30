@@ -173,16 +173,18 @@ public class BikeController : MonoBehaviour
 
 	void LeaveGround ()
 	{
-		grounded = false;
+		//grounded = false;
 	}
 	
 	void OnTriggerStay2D (Collider2D col)
 	{
 		rearWheelDown = true;
+		grounded = true;
 	}
 	
 	void OnTriggerExit2D (Collider2D col)
 	{
 		rearWheelDown = false;
+		grounded = false;
 	}
 }

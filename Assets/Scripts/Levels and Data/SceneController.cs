@@ -14,6 +14,7 @@ public class SceneController : MonoBehaviour
 	private LevelBuilder builder;
 	public bool editorMode = false;
 	public float levelTimeElapsed = 0;
+	public float catProbability = 0.3f;
 
 	void Awake ()
 	{
@@ -122,10 +123,11 @@ public class SceneController : MonoBehaviour
 
 	private void SpawnCat ()
 	{
-		Vector2 viewTopRightCorner = Vector2.right * (7.0f + levelWidth) + Vector2.up * 4.5f;
-		RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopRightCorner, Vector2.down);
-		if (hit.normal.Equals (Vector2.up)) {
-			GameObject cat = (GameObject)Instantiate (catPrefab, hit.point, Quaternion.identity);
+		if (Random.value < catProbability) {
+			Vector2 viewTopRightCorner = Vector2.right * (7.0f + levelWidth) + Vector2.up * 4.5f;
+			RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopRightCorner, Vector2.down);
+			Vector2 normal = hit.normal;
+			GameObject cat = (GameObject)Instantiate (catPrefab, hit.point, Quaternion.LookRotation(normal, Vector3.forward));	
 		}
 	}
 
