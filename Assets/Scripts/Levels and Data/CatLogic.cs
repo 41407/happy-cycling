@@ -12,12 +12,15 @@ public class CatLogic : MonoBehaviour
 	public Sprite jumping;
 	private SpriteRenderer rend;
 	private Animator anim;
+	public AudioClip meow;
+	private AudioSource aud;
 
 	void Awake ()
 	{
 		rend = GetComponentInChildren<SpriteRenderer> ();
 		anim = GetComponentInChildren<Animator> ();
 		rend.sprite = idle;
+		aud = GetComponent<AudioSource> ();
 	}
 
 	void Update ()
@@ -36,6 +39,7 @@ public class CatLogic : MonoBehaviour
 
 	void Flee ()
 	{
+		aud.PlayOneShot (meow);
 		Destroy (gameObject, destroyTimeout);
 		rend.sprite = jumping;
 		anim.enabled = true;
