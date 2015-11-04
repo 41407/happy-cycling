@@ -13,7 +13,7 @@ public class Rider : MonoBehaviour
 	{
 		anim = GetComponent<Animator> ();
 		rend = GetComponent<SpriteRenderer> ();
-	//	rend.sprite = standing;
+		//	rend.sprite = standing;
 	}
 
 	void Pump ()
@@ -28,6 +28,18 @@ public class Rider : MonoBehaviour
 		anim.ResetTrigger ("Pump");
 		anim.SetTrigger ("Jump");
 		//rend.sprite = upright;
+	}
+
+	void Land ()
+	{
+		anim.ResetTrigger ("Air");
+		anim.SetTrigger ("Land");
+	}
+
+	void LeaveGround ()
+	{
+		anim.ResetTrigger ("Land");
+		anim.SetTrigger ("Air");
 	}
 
 	void Go ()

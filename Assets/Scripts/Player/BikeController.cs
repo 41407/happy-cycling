@@ -162,7 +162,7 @@ public class BikeController : MonoBehaviour
 
 	void OnCollisionStay2D (Collision2D col)
 	{
-		grounded = true;
+		Land ();
 	}
 
 	void OnCollisionExit2D (Collision2D col)
@@ -172,18 +172,25 @@ public class BikeController : MonoBehaviour
 
 	void LeaveGround ()
 	{
+		rider.SendMessage ("LeaveGround", SendMessageOptions.DontRequireReceiver);
 		grounded = false;
+	}
+
+	void Land ()
+	{
+		rider.SendMessage ("Land", SendMessageOptions.DontRequireReceiver);
+		grounded = true;
 	}
 	
 	void OnTriggerStay2D (Collider2D col)
 	{
 		rearWheelDown = true;
-		grounded = true;
+		Land ();
 	}
 	
 	void OnTriggerExit2D (Collider2D col)
 	{
 		rearWheelDown = false;
-		grounded = false;
+		LeaveGround ();
 	}
 }
