@@ -22,7 +22,7 @@ public class BikeController : MonoBehaviour
 	private float jumpStrength = 0;
 	public float landStrength = 200;
 	private bool started = false;
-	private bool grounded;
+	public bool grounded;
 	public bool fallen = false;
 	private bool resetEnabled = false;
 	public float ungroundGraceTime = 0.05f;

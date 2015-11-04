@@ -29,22 +29,22 @@ public class TheEnd : MonoBehaviour
 		player.SendMessage ("Pause");
 		player.AddComponent<EndingScript> ();
 		if (TimeRecord ()) {
+			print ("New time record!");
 			PlayerPrefs.SetFloat ("TimeRecord", Score.GetTime ());
 		}
 		if (CrashesRecord ()) {
+			print ("New crashes record!");
 			PlayerPrefs.SetInt ("CrashesRecord", Score.GetCrashes ());
 		}
 	}
 
 	bool TimeRecord ()
 	{
-		print ("New time record!");
 		return !PlayerPrefs.HasKey ("TimeRecord") || PlayerPrefs.GetFloat ("TimeRecord") > Score.GetTime ();
 	}
 
 	bool CrashesRecord ()
 	{
-		print ("New crashes record!");
 		return !PlayerPrefs.HasKey ("CrashesRecord") || PlayerPrefs.GetInt ("CrashesRecord") > Score.GetCrashes ();
 	}
 }
