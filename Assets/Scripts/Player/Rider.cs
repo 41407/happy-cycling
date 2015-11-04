@@ -7,26 +7,33 @@ public class Rider : MonoBehaviour
 	public Sprite down;
 	public Sprite standing;
 	private SpriteRenderer rend;
+	private Animator anim;
 
 	void Awake ()
 	{
+		anim = GetComponent<Animator> ();
 		rend = GetComponent<SpriteRenderer> ();
-		rend.sprite = standing;
+	//	rend.sprite = standing;
 	}
 
 	void Pump ()
 	{
-		rend.sprite = down;
+		anim.SetTrigger ("Pump");
+		anim.ResetTrigger ("Jump");
+		//rend.sprite = down;
 	}
 
 	void Jump ()
 	{
-		rend.sprite = upright;
+		anim.ResetTrigger ("Pump");
+		anim.SetTrigger ("Jump");
+		//rend.sprite = upright;
 	}
 
 	void Go ()
 	{
-		rend.sprite = upright;
+		//rend.sprite = upright;
+		anim.SetTrigger ("Jump");
 	}
 
 	void OnCollisionEnter2D (Collision2D col)
