@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 047b54834c2284532ad16c378a2c8f1f
-timeCreated: 1446652743
+guid: c83999d7932d243c8a8b652f89902021
+timeCreated: 1447105705
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,10 @@ TextureImporter:
     21300002: rider upright_1
     21300004: rider upright_2
     21300006: rider upright_3
+    21300008: rider upright_4
+    21300010: rider upright_5
+    21300012: rider upright_6
+    21300014: rider upright_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -88,6 +92,46 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: rider upright_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: rider upright_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: rider upright_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: rider upright_7
+      rect:
+        serializedVersion: 2
+        x: 224
         y: 0
         width: 32
         height: 32

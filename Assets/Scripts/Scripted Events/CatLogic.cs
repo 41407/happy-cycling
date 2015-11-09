@@ -8,18 +8,13 @@ public class CatLogic : MonoBehaviour
 	public bool fleeing = false;
 	public float fleeSpeed = 5.0f;
 	public float destroyTimeout = 1.5f;
-	public Sprite idle;
-	public Sprite jumping;
-	private SpriteRenderer rend;
 	private Animator anim;
 	public AudioClip meow;
 	private AudioSource aud;
 
 	void Awake ()
 	{
-		rend = GetComponentInChildren<SpriteRenderer> ();
 		anim = GetComponentInChildren<Animator> ();
-		rend.sprite = idle;
 		aud = GetComponent<AudioSource> ();
 	}
 
@@ -39,10 +34,9 @@ public class CatLogic : MonoBehaviour
 
 	void Flee ()
 	{
+		anim.SetTrigger("Flee");
 		aud.PlayOneShot (meow);
 		Destroy (gameObject, destroyTimeout);
-		rend.sprite = jumping;
-		anim.enabled = true;
 		fleeing = true;
 	}
 
