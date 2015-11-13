@@ -144,4 +144,9 @@ public class SceneController : MonoBehaviour
 	{
 		return !cam.GetComponent<CameraController> ().panning;
 	}
+
+	void OnDisable ()
+	{
+		Time.timeScale = 1;
+	}
 }
