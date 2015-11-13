@@ -5,6 +5,7 @@ public class MainMenuController : MonoBehaviour
 {
 	public string gameSceneName;
 	public string loadSavedGameSceneName;
+	public GameObject[] buttons;
 	private AsyncOperation async;
 	public int state = 0;
 

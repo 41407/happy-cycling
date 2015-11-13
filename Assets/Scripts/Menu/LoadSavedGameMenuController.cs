@@ -9,10 +9,10 @@ public class LoadSavedGameMenuController : MonoBehaviour
 	void NewGame ()
 	{
 		Score.Reset ();
-		PlayerPrefs.SetInt ("Level", 0);
-		PlayerPrefs.SetFloat ("Time", 0);
-		PlayerPrefs.SetInt ("Crashes", 0);
-		PlayerPrefs.SetInt ("Timer Visible", 0);
+		PlayerPrefs.DeleteKey ("Level");
+		PlayerPrefs.DeleteKey ("Time");
+		PlayerPrefs.DeleteKey ("Crashes");
+		PlayerPrefs.DeleteKey ("Timer Visible");
 		Application.LoadLevelAsync (gameScene);
 	}
 
