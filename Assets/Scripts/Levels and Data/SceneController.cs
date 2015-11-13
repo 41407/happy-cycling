@@ -48,6 +48,7 @@ public class SceneController : MonoBehaviour
 				int level = PlayerPrefs.GetInt ("Level") + 1;
 				PlayerPrefs.SetInt ("Level", level);
 				Score.AddTime (levelTimeElapsed);
+				PlayerPrefs.SetFloat ("Time", Score.GetTime ());
 				levelTimeElapsed = 0;
 				builder.Build (level, cam.transform.position, levelWidth);
 				builder.Build (level + 1, cam.transform.position, levelWidth * 2);
@@ -128,7 +129,7 @@ public class SceneController : MonoBehaviour
 			Vector2 viewTopRightCorner = Vector2.right * (7.0f + levelWidth) + Vector2.up * 4.5f;
 			RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopRightCorner, Vector2.down);
 			Vector2 normal = hit.normal;
-			GameObject cat = (GameObject)Instantiate (catPrefab, hit.point, Quaternion.LookRotation(normal, Vector3.back));	
+			Instantiate (catPrefab, hit.point, Quaternion.LookRotation (normal, Vector3.back));	
 		}
 	}
 

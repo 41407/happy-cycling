@@ -77,6 +77,7 @@ public class BikeController : MonoBehaviour
 			aud.PlayOneShot (crash);
 			rider.SetActive (false);
 			Score.AddCrash ();
+			PlayerPrefs.SetInt ("Crashes", Score.GetCrashes ());
 			InstantiateRagdoll ();
 		}
 	}
