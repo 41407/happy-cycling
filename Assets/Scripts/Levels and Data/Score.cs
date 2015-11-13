@@ -11,10 +11,15 @@ public static class Score
 		crashes = 0;
 		time = 0;
 	}
-
+	
 	public static void AddCrash ()
 	{
 		crashes++;
+	}
+
+	public static void SetCrashes (int newCrashes)
+	{
+		crashes = newCrashes;
 	}
 
 	public static int GetCrashes ()
@@ -25,6 +30,11 @@ public static class Score
 	public static void AddTime (float elapsed)
 	{
 		time += elapsed;
+	}
+	
+	public static void SetTime (float newTime)
+	{
+		time = newTime;
 	}
 
 	public static float GetTime ()

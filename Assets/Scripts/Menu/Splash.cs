@@ -1,19 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RecordDisplay : MonoBehaviour
+public class Splash : MonoBehaviour
 {
 
 	public float startTranslateTime = 0;
-	private Vector3 targetPosition;
-	public Vector3 finalPosition;
-	public float finishTime = 1;
+	private Vector2 targetPosition;
+	public Vector2 finalPosition;
+	public float finishTime = 2;
 
 	void Start ()
 	{
-		if (PlayerPrefs.HasKey ("TimeRecord")) {
-			Invoke ("StartTranslate", startTranslateTime);
-		}
+		Invoke ("StartTranslate", startTranslateTime);
 		targetPosition = transform.position;
 	}
 	
@@ -31,15 +29,15 @@ public class RecordDisplay : MonoBehaviour
 	void Finish ()
 	{
 		transform.position = targetPosition;
-		GameObject.Find ("Main Menu").SendMessage ("Advance");
+		GameObject.Find ("Main Menu Controller").SendMessage ("Advance");
 		Destroy (this);
 	}
 
 	void Update ()
 	{
-		if (Input.anyKeyDown && PlayerPrefs.HasKey ("TimeRecord")) {
+		if (Input.anyKeyDown) {
 			StartTranslate (0);
 		}
-		transform.position = Vector3.Lerp (transform.position, targetPosition, 0.1f);
+		transform.position = Vector2.Lerp (transform.position, targetPosition, 0.1f);
 	}
 }

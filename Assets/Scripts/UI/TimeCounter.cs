@@ -27,7 +27,7 @@ public class TimeCounter : MonoBehaviour
 			t.text = "";
 		}
 		if (Input.GetKeyDown (KeyCode.T)) {
-			PlayerPrefs.SetInt ("TimerVisible", PlayerPrefs.GetInt ("TimerVisible") + 1);
+			PlayerPrefs.SetInt ("Timer Visible", PlayerPrefs.GetInt ("Timer Visible") + 1);
 			SetVisible ();
 		}
 	}
@@ -45,6 +45,6 @@ public class TimeCounter : MonoBehaviour
 
 	void SetVisible ()
 	{
-		visible = PlayerPrefs.GetInt ("TimerVisible") % 2 == 0;
+		visible = PlayerPrefs.GetInt ("Timer Visible") % 2 != 0;
 	}
 }

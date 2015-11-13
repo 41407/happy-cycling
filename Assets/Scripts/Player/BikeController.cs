@@ -58,7 +58,7 @@ public class BikeController : MonoBehaviour
 			started = true;
 			rider.SendMessage ("Go", SendMessageOptions.DontRequireReceiver);
 		} else if (resetEnabled) {
-			GameObject.Find ("Scene Controller").SendMessage ("Restart");
+			GameObject.Find ("Scene Controller").SendMessage ("Restart", SendMessageOptions.DontRequireReceiver);
 		}
 	}
 

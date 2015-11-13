@@ -29,4 +29,9 @@ public class SpriteColorFlash : MonoBehaviour
 			sr.color = a;
 		}
 	}
+
+	void OnDisable ()
+	{
+		sr.color = a;
+	}
 }
