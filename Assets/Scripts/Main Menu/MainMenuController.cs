@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MainMenu : MonoBehaviour
+public class MainMenuController : MonoBehaviour
 {
 	public string sceneName;
 	private AsyncOperation async;
