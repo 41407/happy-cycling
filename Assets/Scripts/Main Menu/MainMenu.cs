@@ -40,7 +40,6 @@ public class MainMenu : MonoBehaviour
 		}
 		if (async != null) {
 			if (async.isDone) {
-				GameObject.Find ("Music").SendMessage ("Play");
 				Destroy (gameObject);
 			}
 		}

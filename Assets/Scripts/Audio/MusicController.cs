@@ -22,7 +22,9 @@ public class MusicController : MonoBehaviour
 	
 	void Play ()
 	{
-		aud.Play ();
+		if (!aud.isPlaying) {
+			aud.Play ();
+		}
 	}
 	
 	void Stop ()

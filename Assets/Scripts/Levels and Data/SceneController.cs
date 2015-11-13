@@ -30,6 +30,7 @@ public class SceneController : MonoBehaviour
 	{
 		InitializeLevel ();
 		aud.PlayOneShot (levelStart);
+		GameObject.Find ("Music").SendMessage ("Play");
 	}
 
 	void Restart ()
