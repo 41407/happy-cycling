@@ -19,7 +19,7 @@ public class PlayerInput : MonoBehaviour
 			if (Input.GetKeyDown (KeyCode.E)) {
 				SendMessage ("Fall");
 			}
-			if ((mouseControlled && Input.GetKey (KeyCode.Space)) || (!mouseControlled && Input.GetMouseButton (0))) {
+			if ((mouseControlled && Input.GetButton ("Jump")) || (!mouseControlled && Input.GetMouseButton (0))) {
 				mouseControlled = !mouseControlled;
 				if (!mouseControlled) {
 					UnityEngine.Cursor.visible = false;
@@ -32,17 +32,17 @@ public class PlayerInput : MonoBehaviour
 
 	private bool KeyDown ()
 	{
-		return Input.GetMouseButtonDown (0) || Input.GetKeyDown (KeyCode.Space);
+		return Input.GetMouseButtonDown (0) || Input.GetButtonDown ("Jump");
 	}
 	
 	private bool KeyUp ()
 	{
-		return Input.GetMouseButtonUp (0) || Input.GetKeyUp (KeyCode.Space);
+		return Input.GetMouseButtonUp (0) || Input.GetButtonUp ("Jump");
 	}
 	
-	private bool KeyPressed ()
+	private bool Key ()
 	{
-		return Input.GetMouseButton (0) || Input.GetKey (KeyCode.Space);
+		return Input.GetMouseButton (0) || Input.GetButton ("Jump");
 	}
 
 	void Pause ()
@@ -53,7 +53,7 @@ public class PlayerInput : MonoBehaviour
 	void Continue ()
 	{
 		paused = false;
-		if (!KeyPressed ()) {
+		if (!Key ()) {
 			SendMessage ("Go");
 		}
 	}
