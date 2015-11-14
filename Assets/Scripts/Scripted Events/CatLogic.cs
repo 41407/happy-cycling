@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CatLogic : MonoBehaviour
@@ -24,7 +24,7 @@ public class CatLogic : MonoBehaviour
 			player = GameObject.FindGameObjectWithTag ("Player").transform;
 		} else if (!fleeing) {
 			if (player.position.x > transform.position.x - fleeDistance ||
-				player.GetComponent<BikeController> ().fallen) {
+				player.GetComponent<BikeController> ().crashed) {
 				Flee ();
 			}
 		} else if (fleeing) {

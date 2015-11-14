@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ReleaseToJump : MonoBehaviour
@@ -16,7 +16,7 @@ public class ReleaseToJump : MonoBehaviour
 	{
 		if (!player) {
 			player = GameObject.FindGameObjectWithTag ("Player");
-		} else if (!player.GetComponent<BikeController> ().fallen) {
+		} else if (!player.GetComponent<BikeController> ().crashed) {
 			if ((player.transform.position.x > transform.position.x && player.transform.position.x < transform.position.x + 1) && tutorialTriggered == false) {
 				sc.SendMessage ("SetPaused", true);
 				tutorialTriggered = true;

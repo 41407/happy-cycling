@@ -50,6 +50,6 @@ public class Rider : MonoBehaviour
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
-		SendMessageUpwards ("Fall");
+		SendMessageUpwards ("Crash");
 	}
 }

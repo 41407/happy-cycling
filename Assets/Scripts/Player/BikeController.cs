@@ -3,39 +3,50 @@ using System.Collections;
 
 public class BikeController : MonoBehaviour
 {
-	private GameObject ragdoll;
-	public float maxSpeed = 5;
-	public float maxSpeedLerp = 0.01f;
-	public float currentMaxSpeed = 5;
-	public float acceleration = 15;
+
+#region Dependences
+	private GameObject sceneController;
+	private GameObject ragdollPrefab;
 	private Rigidbody2D body;
 	private GameObject rider;
+	private AudioSource audioSource;
+	public AudioClip pump;
+	public AudioClip jump;
+	public AudioClip crash;
+#endregion
+
+#region StateVariables
+	private bool started = false;
+	public float currentMaxSpeed = 5;
+	public bool grounded;
+	public bool crashed = false;
+	private bool rearWheelDown = true;
+#endregion
+
+#region Controls
+	public float maxSpeed = 5;
+	public float maxSpeedLerp = 0.01f;
+	public float acceleration = 15;
 	public float groundedStaticTorque = 0.1f;
 	public float groundedPumpTorque = 500;
 	public float pumpSpeedBoost = 3;
 	public float aerialPumpStrength = -100;
+	public float ungroundGraceTime = 0.05f;
 	public float maxJumpStrength = 2000;
 	public float groundedJumpTorque = -50;
 	public float aerialJumpTorque = -100;
-	public float jumpSpeedBoost = 3;
+	public float jumpSpeedBoost = 7;
 	private float jumpTorque;
 	private float jumpStrength = 0;
 	public float landStrength = 200;
-	private bool started = false;
-	public bool grounded;
-	public bool fallen = false;
-	private bool resetEnabled = false;
-	public float ungroundGraceTime = 0.05f;
-	private bool rearWheelDown = true;
-	public AudioClip pump;
-	public AudioClip jump;
-	public AudioClip crash;
-	private AudioSource aud;
+#endregion
 
+#region UnityCallbacks
 	void Awake ()
 	{
-		aud = GetComponent<AudioSource> ();
-		ragdoll = (GameObject)Resources.Load ("Prefabs/Downed Rider");
+		sceneController = GameObject.Find ("Scene Controller");
+		audioSource = GetComponent<AudioSource> ();
+		ragdollPrefab = (GameObject)Resources.Load ("Prefabs/Downed Rider");
 		body = GetComponent<Rigidbody2D> ();
 		body.centerOfMass = new Vector2 (-0.1f, 0.4f);
 		rider = transform.FindChild ("Rider").gameObject;
@@ -51,30 +62,51 @@ public class BikeController : MonoBehaviour
 		}
 		currentMaxSpeed = Mathf.Lerp (currentMaxSpeed, maxSpeed, maxSpeedLerp); 
 	}
+
+	void OnCollisionStay2D (Collision2D col)
+	{
+		Land ();
+	}
 	
+	void OnCollisionExit2D (Collision2D col)
+	{
+		Invoke ("LeaveGround", ungroundGraceTime);
+	}
+	
+	void OnTriggerStay2D (Collider2D col)
+	{
+		rearWheelDown = true;
+		Land ();
+	}
+	
+	void OnTriggerExit2D (Collider2D col)
+	{
+		rearWheelDown = false;
+		LeaveGround ();
+	}
+#endregion
+
+#region BasicStates
 	void Go ()
 	{
-		if (!fallen) {
+		if (!crashed) {
 			started = true;
 			rider.SendMessage ("Go", SendMessageOptions.DontRequireReceiver);
-		} else if (resetEnabled) {
-			GameObject.Find ("Scene Controller").SendMessage ("Restart", SendMessageOptions.DontRequireReceiver);
+		} else {
+			sceneController.SendMessage ("Restart", SendMessageOptions.DontRequireReceiver);
 		}
 	}
 
-	void GoAfterDelay (float time)
+	void Crash ()
 	{
-		Invoke ("Go", time);
-	}
-
-	void Fall ()
-	{
-		if (!fallen) {
+		if (!crashed) {
 			started = false;
-			fallen = true;
+			crashed = true;
 			CancelInvoke ();
-			Invoke ("EnableReset", 0.5f);
-			aud.PlayOneShot (crash);
+			if (sceneController) {
+				sceneController.SendMessage ("PlayerCrashed", SendMessageOptions.DontRequireReceiver);
+			}
+			audioSource.PlayOneShot (crash);
 			rider.SetActive (false);
 			Score.AddCrash ();
 			PlayerPrefs.SetInt ("Crashes", Score.GetCrashes ());
@@ -82,27 +114,42 @@ public class BikeController : MonoBehaviour
 		}
 	}
 
+	void LeaveGround ()
+	{
+		rider.SendMessage ("LeaveGround", SendMessageOptions.DontRequireReceiver);
+		grounded = false;
+	}
+	
+	void Land ()
+	{
+		rider.SendMessage ("Land", SendMessageOptions.DontRequireReceiver);
+		grounded = true;
+	}
+#endregion
+
 	private void InstantiateRagdoll ()
 	{
-		GameObject downedRider = (GameObject)Instantiate (ragdoll, transform.position, transform.rotation);
+		GameObject downedRider = (GameObject)Instantiate (ragdollPrefab, transform.position, transform.rotation);
 		downedRider.SendMessage ("SetVelocity", body.velocity);
 	}
 
 	void Pump ()
 	{
-		if (started && grounded && !fallen) {
-			GroundPump ();
-		}
-		if (!grounded && !fallen) {
-			AerialPump ();
+		if (!crashed && started) {
+			if (grounded || rearWheelDown) {
+				GroundPump ();
+			}
+			if (!grounded) {
+				AerialPump ();
+			}
 		}
 	}
 
 	void GroundPump ()
 	{
-		aud.clip = pump;
-		aud.volume = 0.9f;
-		aud.Play ();
+		audioSource.clip = pump;
+		audioSource.volume = 0.9f;
+		audioSource.Play ();
 		rider.SendMessage ("Pump", SendMessageOptions.DontRequireReceiver);
 		body.AddTorque (groundedPumpTorque);
 		currentMaxSpeed += pumpSpeedBoost;
@@ -127,21 +174,23 @@ public class BikeController : MonoBehaviour
 
 	void Jump ()
 	{
-		if (grounded && !fallen) {
-			CancelInvoke ();
-			GroundJump ();
-		}
-		if (!grounded && !fallen) {
-			CancelInvoke ();
-			AerialJump ();
+		if (!crashed && started) {
+			if (rearWheelDown || grounded) {
+				CancelInvoke ();
+				GroundJump ();
+			}
+			if (!grounded) {
+				CancelInvoke ();
+				AerialJump ();
+			}
 		}
 	}
 
 	void GroundJump ()
 	{
-		aud.Stop ();
-		aud.volume = (jumpStrength - 500) / 2000;
-		aud.PlayOneShot (jump, 0.9f);
+		audioSource.Stop ();
+		audioSource.volume = (jumpStrength - 500) / 2000;
+		audioSource.PlayOneShot (jump, 0.9f);
 		rider.SendMessage ("Jump", SendMessageOptions.DontRequireReceiver);
 		body.AddForce (Vector2.up * jumpStrength);
 		body.AddTorque (jumpTorque);
@@ -154,44 +203,5 @@ public class BikeController : MonoBehaviour
 		currentMaxSpeed += jumpSpeedBoost;
 		body.AddForce (Vector2.down * landStrength);
 		body.AddTorque (aerialJumpTorque);
-	}
-
-	void EnableReset ()
-	{
-		resetEnabled = true;
-	}
-
-	void OnCollisionStay2D (Collision2D col)
-	{
-		Land ();
-	}
-
-	void OnCollisionExit2D (Collision2D col)
-	{
-		Invoke ("LeaveGround", ungroundGraceTime);
-	}
-
-	void LeaveGround ()
-	{
-		rider.SendMessage ("LeaveGround", SendMessageOptions.DontRequireReceiver);
-		grounded = false;
-	}
-
-	void Land ()
-	{
-		rider.SendMessage ("Land", SendMessageOptions.DontRequireReceiver);
-		grounded = true;
-	}
-	
-	void OnTriggerStay2D (Collider2D col)
-	{
-		rearWheelDown = true;
-		Land ();
-	}
-	
-	void OnTriggerExit2D (Collider2D col)
-	{
-		rearWheelDown = false;
-		LeaveGround ();
 	}
 }

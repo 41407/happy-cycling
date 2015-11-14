@@ -17,7 +17,7 @@ public class PlayerInput : MonoBehaviour
 				SendMessage ("Jump");
 			}
 			if (Input.GetKeyDown (KeyCode.E)) {
-				SendMessage ("Fall");
+				SendMessage ("Crash");
 			}
 			if ((mouseControlled && Input.GetButton ("Jump")) || (!mouseControlled && Input.GetMouseButton (0))) {
 				mouseControlled = !mouseControlled;

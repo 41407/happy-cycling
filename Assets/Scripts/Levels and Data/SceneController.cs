@@ -14,6 +14,7 @@ public class SceneController : MonoBehaviour
 	private LevelBuilder builder;
 	public bool editorMode = false;
 	public float levelTimeElapsed = 0;
+	private bool restartEnabled = false;
 	public float catProbability = 0.3f;
 
 	void Awake ()
@@ -35,9 +36,11 @@ public class SceneController : MonoBehaviour
 
 	void Restart ()
 	{
-		Score.AddTime (levelTimeElapsed);
-		builder.Reset ();
-		Application.LoadLevel (Application.loadedLevel);
+		if (restartEnabled) {
+			Score.AddTime (levelTimeElapsed);
+			builder.Reset ();
+			Application.LoadLevel (Application.loadedLevel);
+		}
 	}
 
 	void Update ()
@@ -57,7 +60,7 @@ public class SceneController : MonoBehaviour
 			cam.SendMessage ("Advance");
 		}
 		if (player.transform.position.y < -5) {
-			player.SendMessage ("Fall");
+			player.SendMessage ("Crash");
 		}
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			builder.Reset ();
@@ -74,12 +77,15 @@ public class SceneController : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.R) && Input.GetKey (KeyCode.LeftShift)) {
 			PlayerPrefs.SetInt ("Level", 0);
 			PlayerPrefs.SetInt ("Crashes", 0);
+			restartEnabled = true;
 			Restart ();
 		} else if (Input.GetKeyDown (KeyCode.R)) {
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") - 1);
+			restartEnabled = true;
 			Restart ();
 		} else if (Input.GetKeyDown (KeyCode.T)) {
 			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") + 1);
+			restartEnabled = true;
 			Restart ();
 		} else if (Input.GetKeyDown (KeyCode.P)) {
 			SetPaused (!paused);
@@ -103,6 +109,16 @@ public class SceneController : MonoBehaviour
 		SetPaused (false);
 	}
 
+	void PlayerCrashed ()
+	{
+		Invoke ("EnableReset", 0.5f);
+	}
+
+	void EnableRestart ()
+	{
+		restartEnabled = true;
+	}
+
 	private void InitializeLevel ()
 	{
 		if (!editorMode) {
@@ -120,7 +136,12 @@ public class SceneController : MonoBehaviour
 		Vector2 viewTopLeftCorner = Vector2.left * 7.0f + Vector2.up * 4.5f;
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopLeftCorner, Vector2.down);
 		player = (GameObject)Instantiate (playerPrefab, hit.point, Quaternion.identity);
-		player.SendMessage ("GoAfterDelay", 0.16f);
+		Invoke ("PlayerGo", 0.16f);
+	}
+
+	private void PlayerGo ()
+	{
+		player.SendMessage ("Go");
 	}
 
 	private void SpawnCat ()
@@ -136,7 +157,7 @@ public class SceneController : MonoBehaviour
 	private bool PlayerHasCompletedLevel ()
 	{
 		return (player.transform.position.x > Camera.main.transform.position.x + 7.5f)
-			&& !player.GetComponent<BikeController> ().fallen
+			&& !player.GetComponent<BikeController> ().crashed
 			&& CameraNotPanning ();
 	}
 
