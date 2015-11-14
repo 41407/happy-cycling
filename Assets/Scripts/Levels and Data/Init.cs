@@ -5,6 +5,6 @@ public class Init : MonoBehaviour
 {
 	void Start ()
 	{
-		Application.LoadLevel ("Main Menu");
+		Application.LoadLevelAsync ("Main Menu");
 	}
 }

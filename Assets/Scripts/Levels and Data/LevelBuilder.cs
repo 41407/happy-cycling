@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class LevelBuilder : MonoBehaviour
 {
-	public Object[] levels;
-	public List<int> builtLevels;
+	private Object[] levels;
+	private List<int> builtLevels;
 
 	void Start ()
 	{
