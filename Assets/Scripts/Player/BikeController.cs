@@ -111,7 +111,7 @@ public class BikeController : MonoBehaviour
 			crashed = true;
 			CancelInvoke ();
 			SendMessageUpwards ("PlayerCrashed", SendMessageOptions.DontRequireReceiver);
-			audioSource.PlayOneShot (crash);
+			audioSource.PlayOneShot (crash, 1.0f);
 			rider.SetActive (false);
 			Score.AddCrash ();
 			PlayerPrefs.SetInt ("Crashes", Score.GetCrashes ());
@@ -152,9 +152,7 @@ public class BikeController : MonoBehaviour
 
 	void GroundPump ()
 	{
-		audioSource.clip = pump;
-		audioSource.volume = 0.9f;
-		audioSource.Play ();
+		audioSource.PlayOneShot (pump, 0.9f);
 		rider.SendMessage ("Pump", SendMessageOptions.DontRequireReceiver);
 		body.AddTorque (groundedPumpTorque);
 		currentMaxSpeed += pumpSpeedBoost;
@@ -194,8 +192,7 @@ public class BikeController : MonoBehaviour
 	void GroundJump ()
 	{
 		audioSource.Stop ();
-		audioSource.volume = (jumpStrength - 500) / 2000;
-		audioSource.PlayOneShot (jump, 0.9f);
+		audioSource.PlayOneShot (jump, (jumpStrength - 500) / 2000);
 		rider.SendMessage ("Jump", SendMessageOptions.DontRequireReceiver);
 		body.AddForce (Vector2.up * jumpStrength);
 		body.AddTorque (jumpTorque);
