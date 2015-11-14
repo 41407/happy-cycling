@@ -22,8 +22,12 @@ public class LevelBuilder : MonoBehaviour
 	public void Build (int level, Vector2 position, float xOffset)
 	{
 		if (!builtLevels.Contains (level) && level >= 0 && level < levels.Length) {
-			Instantiate (levels [level], position + Vector2.right * xOffset, Quaternion.identity);
+			GameObject newLevel = (GameObject)Instantiate (levels [level], position + Vector2.right * xOffset, Quaternion.identity);
+			newLevel.transform.parent = transform;
 			builtLevels.Add (level);
+			if (transform.childCount > 4) {
+				Destroy (transform.GetChild (0).gameObject);
+			}
 		}
 	}
 
@@ -36,5 +40,6 @@ public class LevelBuilder : MonoBehaviour
 	public void Reset ()
 	{
 		builtLevels.Clear ();
+		transform.DetachChildren ();
 	}
 }

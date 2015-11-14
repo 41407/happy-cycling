@@ -112,7 +112,7 @@ public class SceneController : MonoBehaviour
 
 	void PlayerCrashed ()
 	{
-		Invoke ("EnableReset", 0.5f);
+		Invoke ("EnableRestart", 0.5f);
 	}
 
 	void EnableRestart ()

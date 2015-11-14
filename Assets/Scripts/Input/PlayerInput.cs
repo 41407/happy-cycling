@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerInput : MonoBehaviour
 {
 	private bool paused = false;
-	public bool mouseControlled = true;
+	private bool mouseControlled = true;
 
 	void Update ()
 	{
