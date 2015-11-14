@@ -4,11 +4,10 @@ using System.Collections;
 public class BikeController : MonoBehaviour
 {
 
-#region Dependences
-	private GameObject sceneController;
+#region Dependencies
 	private GameObject ragdollPrefab;
-	private Rigidbody2D body;
 	private GameObject rider;
+	private Rigidbody2D body;
 	private AudioSource audioSource;
 	public AudioClip pump;
 	public AudioClip jump;
@@ -17,25 +16,34 @@ public class BikeController : MonoBehaviour
 
 #region StateVariables
 	private bool started = false;
-	public float currentMaxSpeed = 5;
-	public bool grounded;
-	public bool crashed = false;
+	private float currentMaxSpeed = 5;
+	private bool grounded;
+	private bool crashed = false;
 	private bool rearWheelDown = true;
 #endregion
 
-#region Controls
-	public float maxSpeed = 5;
+	[Space]
+	#region PhysicsParameters
+	public Vector2
+		bodyCenterOfMass = new Vector2 (-0.1f, 0.4f);
+	[Header("Speed")]
+	public float
+		maxSpeed = 5;
 	public float maxSpeedLerp = 0.01f;
 	public float acceleration = 15;
 	public float groundedStaticTorque = 0.1f;
-	public float groundedPumpTorque = 500;
 	public float pumpSpeedBoost = 3;
+	public float jumpSpeedBoost = 7;
+	[Header("Pump")]
+	public float
+		groundedPumpTorque = 500;
 	public float aerialPumpStrength = -100;
-	public float ungroundGraceTime = 0.05f;
+	[Header("Jump")]
+	public float
+		ungroundGraceTime = 0.05f;
 	public float maxJumpStrength = 2000;
 	public float groundedJumpTorque = -50;
 	public float aerialJumpTorque = -100;
-	public float jumpSpeedBoost = 7;
 	private float jumpTorque;
 	private float jumpStrength = 0;
 	public float landStrength = 200;
@@ -44,11 +52,10 @@ public class BikeController : MonoBehaviour
 #region UnityCallbacks
 	void Awake ()
 	{
-		sceneController = GameObject.Find ("Scene Controller");
 		audioSource = GetComponent<AudioSource> ();
 		ragdollPrefab = (GameObject)Resources.Load ("Prefabs/Downed Rider");
 		body = GetComponent<Rigidbody2D> ();
-		body.centerOfMass = new Vector2 (-0.1f, 0.4f);
+		body.centerOfMass = bodyCenterOfMass;
 		rider = transform.FindChild ("Rider").gameObject;
 	}
 
@@ -93,7 +100,7 @@ public class BikeController : MonoBehaviour
 			started = true;
 			rider.SendMessage ("Go", SendMessageOptions.DontRequireReceiver);
 		} else {
-			sceneController.SendMessage ("Restart", SendMessageOptions.DontRequireReceiver);
+			SendMessageUpwards ("Restart", SendMessageOptions.DontRequireReceiver);
 		}
 	}
 
@@ -103,9 +110,7 @@ public class BikeController : MonoBehaviour
 			started = false;
 			crashed = true;
 			CancelInvoke ();
-			if (sceneController) {
-				sceneController.SendMessage ("PlayerCrashed", SendMessageOptions.DontRequireReceiver);
-			}
+			SendMessageUpwards ("PlayerCrashed", SendMessageOptions.DontRequireReceiver);
 			audioSource.PlayOneShot (crash);
 			rider.SetActive (false);
 			Score.AddCrash ();
@@ -203,5 +208,10 @@ public class BikeController : MonoBehaviour
 		currentMaxSpeed += jumpSpeedBoost;
 		body.AddForce (Vector2.down * landStrength);
 		body.AddTorque (aerialJumpTorque);
+	}
+
+	public bool GetCrashed ()
+	{
+		return crashed;
 	}
 }

@@ -6,6 +6,7 @@ public class SceneController : MonoBehaviour
 	private GameObject playerPrefab;
 	private GameObject catPrefab;
 	private GameObject player;
+	private BikeController playerController;
 	private Camera cam;
 	private float levelWidth;
 	public bool paused = false;
@@ -136,6 +137,8 @@ public class SceneController : MonoBehaviour
 		Vector2 viewTopLeftCorner = Vector2.left * 7.0f + Vector2.up * 4.5f;
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopLeftCorner, Vector2.down);
 		player = (GameObject)Instantiate (playerPrefab, hit.point, Quaternion.identity);
+		player.transform.parent = transform;
+		playerController = player.GetComponent<BikeController> ();
 		Invoke ("PlayerGo", 0.16f);
 	}
 
@@ -156,8 +159,8 @@ public class SceneController : MonoBehaviour
 
 	private bool PlayerHasCompletedLevel ()
 	{
-		return (player.transform.position.x > Camera.main.transform.position.x + 7.5f)
-			&& !player.GetComponent<BikeController> ().crashed
+		return (player.transform.position.x > cam.transform.position.x + 7.5f)
+			&& !playerController.GetCrashed ()
 			&& CameraNotPanning ();
 	}
 

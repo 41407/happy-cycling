@@ -24,7 +24,7 @@ public class CatLogic : MonoBehaviour
 			player = GameObject.FindGameObjectWithTag ("Player").transform;
 		} else if (!fleeing) {
 			if (player.position.x > transform.position.x - fleeDistance ||
-				player.GetComponent<BikeController> ().crashed) {
+				player.GetComponent<BikeController> ().GetCrashed()) {
 				Flee ();
 			}
 		} else if (fleeing) {
