@@ -3,15 +3,15 @@ using System.Collections;
 
 public class EndingScript : MonoBehaviour
 {
-	private Vector3 startingPosition;
+	//private Vector3 startingPosition;
 
 	void Start ()
 	{
-		startingPosition = transform.position;
+		//startingPosition = transform.position;
 	}
 
 	void Update ()
 	{
-		transform.position = startingPosition + (Vector3)Random.insideUnitCircle;
+		//transform.position = startingPosition + (Vector3)Random.insideUnitCircle;
 	}
 }

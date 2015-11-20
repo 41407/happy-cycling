@@ -105,6 +105,13 @@ public class SceneController : MonoBehaviour
 		paused = pause;
 	}
 
+	void GameCompleted ()
+	{
+		paused = true;
+		Time.timeScale = 1;
+		GameObject.Find ("Music").SendMessage ("Stop");
+	}
+
 	private void CameraFinishedPanning ()
 	{
 		SetPaused (false);
