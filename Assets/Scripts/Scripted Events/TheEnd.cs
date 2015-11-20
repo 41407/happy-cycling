@@ -27,6 +27,7 @@ public class TheEnd : MonoBehaviour
 	void OnPlayerEnter ()
 	{
 		player.SendMessage ("Pause");
+		sc.SendMessage ("Pause");
 		player.AddComponent<EndingScript> ();
 		if (TimeRecord ()) {
 			print ("New time record!");
