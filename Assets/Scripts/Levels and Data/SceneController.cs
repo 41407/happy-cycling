@@ -192,6 +192,10 @@ public class SceneController : MonoBehaviour
 			print ("New crashes record!");
 			PlayerPrefs.SetInt ("CrashesRecord", Score.GetCrashes ());
 		}
+		Score.Reset ();
+		PlayerPrefs.DeleteKey ("Level");
+		PlayerPrefs.DeleteKey ("Time");
+		PlayerPrefs.DeleteKey ("Crashes");
 	}
 
 	void EndingCamera ()
