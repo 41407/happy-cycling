@@ -66,6 +66,8 @@ public class BikeController : MonoBehaviour
 			if (body.velocity.magnitude < currentMaxSpeed) {
 				body.AddForce (Vector2.right * acceleration);
 			}
+		} else if (!started && body.velocity.magnitude > 0) {
+			body.velocity = new Vector2 (Mathf.Lerp (body.velocity.x, 0, 0.016f), body.velocity.y);
 		}
 		currentMaxSpeed = Mathf.Lerp (currentMaxSpeed, maxSpeed, maxSpeedLerp); 
 	}
@@ -93,7 +95,7 @@ public class BikeController : MonoBehaviour
 	}
 #endregion
 
-#region BasicStates
+	#region BasicStates
 	void Go ()
 	{
 		if (!crashed) {
@@ -101,6 +103,14 @@ public class BikeController : MonoBehaviour
 			rider.SendMessage ("Go", SendMessageOptions.DontRequireReceiver);
 		} else {
 			SendMessageUpwards ("Restart", SendMessageOptions.DontRequireReceiver);
+		}
+	}
+	
+	void Stop ()
+	{
+		if (!crashed) {
+			started = false;
+			rider.SendMessage ("Stop", SendMessageOptions.DontRequireReceiver);
 		}
 	}
 

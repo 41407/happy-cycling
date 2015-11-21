@@ -25,13 +25,16 @@ public class TheEnd : MonoBehaviour
 		}
 		switch (stage) {
 		case 1:
-			player.SetActive (false);
+			player.SendMessage ("Stop");
+			player.SendMessage ("Pause");
+			player.GetComponent<Rigidbody2D>().angularVelocity = 0;
+			player.transform.rotation = Quaternion.identity;
 			transform.GetChild (0).SendMessage ("Go");
 			stage = 2;
 			break;
 		case 3:
-			player.SetActive (true);
 			player.SendMessage ("Go");
+			player.GetComponent<BikeController>().maxSpeed = 3;
 			break;
 		default:
 			break;
@@ -41,7 +44,6 @@ public class TheEnd : MonoBehaviour
 	void OnPlayerEnter ()
 	{
 		sc.SendMessage ("GameCompleted", true);
-		player.AddComponent<EndingScript> ();
 		stage = 1;
 		if (TimeRecord ()) {
 			print ("New time record!");

@@ -37,10 +37,18 @@ public class Rider : MonoBehaviour
 		anim.ResetTrigger ("Land");
 		anim.SetTrigger ("Air");
 	}
-
+	
 	void Go ()
 	{
 		anim.SetTrigger ("Jump");
+	}
+	
+	void Stop ()
+	{
+		anim.ResetTrigger ("Air");
+		anim.ResetTrigger ("Jump");
+		anim.ResetTrigger ("Pump");
+		anim.SetTrigger ("Stop");
 	}
 
 	void OnCollisionEnter2D (Collision2D col)
