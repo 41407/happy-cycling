@@ -7,6 +7,7 @@ public class RiderDismounting : MonoBehaviour
 	public float helmetThrowDelay = 0.5f;
 	public float walkDelay = 2.0f;
 	public float walkSpeed = 1.0f;
+	public float stopWalkingDelay = 5;
 	public GameObject helmetPrefab;
 	public bool walking = false;
 
@@ -24,7 +25,14 @@ public class RiderDismounting : MonoBehaviour
 	void Walk ()
 	{
 		GetComponent<Animator> ().SetBool ("Walk", true);
+		Invoke ("StopWalking", stopWalkingDelay);
 		walking = true;
+	}
+
+	void StopWalking ()
+	{
+		GetComponent<Animator> ().SetBool ("Walk", false);
+		walking = false;
 	}
 
 	void Update ()
