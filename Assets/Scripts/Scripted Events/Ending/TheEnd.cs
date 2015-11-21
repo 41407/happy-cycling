@@ -30,7 +30,7 @@ public class TheEnd : MonoBehaviour
 			player.GetComponent<Rigidbody2D> ().angularVelocity = 0;
 			player.transform.rotation = Quaternion.identity;
 			transform.GetChild (0).SendMessage ("Go");
-			stage = 2;
+			AdvanceStage ();
 			break;
 		case 3:
 			player.SendMessage ("Go");
@@ -38,6 +38,11 @@ public class TheEnd : MonoBehaviour
 			break;
 		case 4:
 			sc.SendMessage ("EndingCamera");
+			if (Camera.main.transform.position.y >= 10) {
+				AdvanceStage ();
+			}
+			break;
+		case 5:
 			if (Input.anyKeyDown || Input.GetButtonDown ("Jump") || Input.GetMouseButtonDown (0)) {
 				sc.SendMessage ("ExitGame");
 			}
@@ -50,7 +55,7 @@ public class TheEnd : MonoBehaviour
 	void OnPlayerEnter ()
 	{
 		sc.SendMessage ("GameCompleted", true);
-		stage = 1;
+		AdvanceStage ();
 	}
 
 	void AdvanceStage ()
