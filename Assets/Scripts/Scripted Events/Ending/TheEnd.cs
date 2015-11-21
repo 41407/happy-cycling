@@ -27,14 +27,20 @@ public class TheEnd : MonoBehaviour
 		case 1:
 			player.SendMessage ("Stop");
 			player.SendMessage ("Pause");
-			player.GetComponent<Rigidbody2D>().angularVelocity = 0;
+			player.GetComponent<Rigidbody2D> ().angularVelocity = 0;
 			player.transform.rotation = Quaternion.identity;
 			transform.GetChild (0).SendMessage ("Go");
 			stage = 2;
 			break;
 		case 3:
 			player.SendMessage ("Go");
-			player.GetComponent<BikeController>().maxSpeed = 3;
+			player.GetComponent<BikeController> ().maxSpeed = 3;
+			break;
+		case 4:
+			sc.SendMessage ("EndingCamera");
+			if (Input.anyKeyDown || Input.GetButtonDown ("Jump") || Input.GetMouseButtonDown (0)) {
+				sc.SendMessage ("ExitGame");
+			}
 			break;
 		default:
 			break;
@@ -45,24 +51,6 @@ public class TheEnd : MonoBehaviour
 	{
 		sc.SendMessage ("GameCompleted", true);
 		stage = 1;
-		if (TimeRecord ()) {
-			print ("New time record!");
-			PlayerPrefs.SetFloat ("TimeRecord", Score.GetTime ());
-		}
-		if (CrashesRecord ()) {
-			print ("New crashes record!");
-			PlayerPrefs.SetInt ("CrashesRecord", Score.GetCrashes ());
-		}
-	}
-
-	bool TimeRecord ()
-	{
-		return !PlayerPrefs.HasKey ("TimeRecord") || PlayerPrefs.GetFloat ("TimeRecord") > Score.GetTime ();
-	}
-
-	bool CrashesRecord ()
-	{
-		return !PlayerPrefs.HasKey ("CrashesRecord") || PlayerPrefs.GetInt ("CrashesRecord") > Score.GetCrashes ();
 	}
 
 	void AdvanceStage ()

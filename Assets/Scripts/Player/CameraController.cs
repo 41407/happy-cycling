@@ -8,10 +8,11 @@ public class CameraController : MonoBehaviour
 	public float levelWidth = 16;
 	public float panSpeed = 10f;
 	public bool panning = false;
+	public bool endingCamera = false;
 
 	void Awake ()
 	{
-		sc = GameObject.Find ("Scene Controller").GetComponent<SceneController>();
+		sc = GameObject.Find ("Scene Controller").GetComponent<SceneController> ();
 		SetLevel (PlayerPrefs.GetInt ("Level"));
 	}
 
@@ -22,8 +23,15 @@ public class CameraController : MonoBehaviour
 			transform.Translate (Vector3.right * panSpeed);
 		} else if (panning) {
 			panning = false;
-			sc.SendMessage("CameraFinishedPanning");
+			sc.SendMessage ("CameraFinishedPanning");
+		} else if (endingCamera && transform.position.y < 10) {
+			transform.Translate (Vector3.up * Time.deltaTime);
 		}
+	}
+
+	void EndingCamera ()
+	{
+		endingCamera = true;
 	}
 
 	void SetLevel (int level)

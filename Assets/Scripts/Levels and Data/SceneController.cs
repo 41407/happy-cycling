@@ -64,13 +64,17 @@ public class SceneController : MonoBehaviour
 			player.SendMessage ("Crash");
 		}
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			builder.Reset ();
-			Application.LoadLevelAsync ("Main Menu");
+			ExitGame ();
 		}
 		if (!paused) {
 			levelTimeElapsed += Time.deltaTime;
 		}
 		DebugKeyCommands ();
+	}
+	
+	void OnDisable ()
+	{
+		Time.timeScale = 1;
 	}
 
 	void DebugKeyCommands ()
@@ -93,6 +97,12 @@ public class SceneController : MonoBehaviour
 		}
 	}
 
+	void ExitGame ()
+	{
+		builder.Reset ();
+		Application.LoadLevelAsync ("Main Menu");
+	}
+
 	private void SetPaused (bool pause)
 	{
 		if (pause) {
@@ -103,13 +113,6 @@ public class SceneController : MonoBehaviour
 			Time.timeScale = 1;
 		}
 		paused = pause;
-	}
-
-	void GameCompleted ()
-	{
-		paused = true;
-		Time.timeScale = 1;
-		GameObject.Find ("Music").SendMessage ("Stop");
 	}
 
 	private void CameraFinishedPanning ()
@@ -175,9 +178,34 @@ public class SceneController : MonoBehaviour
 	{
 		return !cam.GetComponent<CameraController> ().panning;
 	}
-
-	void OnDisable ()
+	
+	void GameCompleted ()
 	{
+		paused = true;
 		Time.timeScale = 1;
+		GameObject.Find ("Music").SendMessage ("Stop");
+		if (TimeRecord ()) {
+			print ("New time record!");
+			PlayerPrefs.SetFloat ("TimeRecord", Score.GetTime ());
+		}
+		if (CrashesRecord ()) {
+			print ("New crashes record!");
+			PlayerPrefs.SetInt ("CrashesRecord", Score.GetCrashes ());
+		}
+	}
+
+	void EndingCamera ()
+	{
+		cam.SendMessage ("EndingCamera");
+	}
+	
+	bool TimeRecord ()
+	{
+		return !PlayerPrefs.HasKey ("TimeRecord") || PlayerPrefs.GetFloat ("TimeRecord") > Score.GetTime ();
+	}
+	
+	bool CrashesRecord ()
+	{
+		return !PlayerPrefs.HasKey ("CrashesRecord") || PlayerPrefs.GetInt ("CrashesRecord") > Score.GetCrashes ();
 	}
 }

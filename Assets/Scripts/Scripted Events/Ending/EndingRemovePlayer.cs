@@ -14,7 +14,7 @@ public class EndingRemovePlayer : MonoBehaviour
 	void Update ()
 	{
 		if (player.transform.position.x >= transform.position.x) {
-			Instantiate (riderGettingOffBikePrefab, transform.position, Quaternion.identity);
+			((GameObject)Instantiate (riderGettingOffBikePrefab, transform.position, Quaternion.identity)).transform.parent = transform.parent;
 			player.transform.FindChild ("Rider").gameObject.SetActive (false);
 			Destroy (gameObject);
 		}
