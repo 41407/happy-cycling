@@ -6,6 +6,9 @@ public class MusicController : MonoBehaviour
 	private AudioSource aud;
 	public bool musicOn = true;
 	public float volume = 0.7f;
+	public AudioClip gameMusic;
+	public AudioClip menuMusic;
+	public AudioClip endingMusic;
 
 	void Awake ()
 	{
@@ -20,6 +23,27 @@ public class MusicController : MonoBehaviour
 		}
 	}
 	
+	void PlayGameMusic ()
+	{
+		aud.clip = gameMusic;
+		aud.loop = true;
+		Play ();
+	}
+	
+	void PlayMenuMusic ()
+	{
+		aud.clip = menuMusic;
+		aud.loop = false;
+		Play ();
+	}
+
+	void PlayEndingMusic ()
+	{
+		aud.clip = endingMusic;
+		aud.loop = false;
+		Play ();
+	}
+
 	void Play ()
 	{
 		if (!aud.isPlaying) {

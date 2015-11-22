@@ -35,14 +35,16 @@ public class TheEnd : MonoBehaviour
 		case 3:
 			player.SendMessage ("Go");
 			player.GetComponent<BikeController> ().maxSpeed = 3;
+			GameObject.Find ("Music").SendMessage ("PlayEndingMusic");
+			AdvanceStage ();
 			break;
-		case 4:
+		case 5:
 			sc.SendMessage ("EndingCamera");
 			if (Camera.main.transform.position.y >= 10) {
 				AdvanceStage ();
 			}
 			break;
-		case 5:
+		case 6:
 			if (Input.anyKeyDown || Input.GetButtonDown ("Jump") || Input.GetMouseButtonDown (0)) {
 				sc.SendMessage ("ExitGame");
 			}

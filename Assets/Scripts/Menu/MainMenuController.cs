@@ -7,12 +7,19 @@ public class MainMenuController : MonoBehaviour
 	public string loadSavedGameSceneName;
 	private AsyncOperation async;
 	public int state = 0;
+	public float musicStartDelay = 1;
 
 	void Start ()
 	{
 		DontDestroyOnLoad (gameObject);
 		GameObject.Find ("Player").SendMessage ("Go");
 		GameObject.Find ("Music").SendMessage ("Stop");
+		Invoke ("StartMusic", musicStartDelay);
+	}
+
+	void StartMusic ()
+	{
+		GameObject.Find ("Music").SendMessage ("PlayMenuMusic");
 	}
 
 	void NextScene ()
@@ -32,7 +39,7 @@ public class MainMenuController : MonoBehaviour
 
 	void Update ()
 	{
-		if ((Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0)) && state >= 3) {
+		if ((Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0)) && state >= 4) {
 			NextScene ();
 		}
 		if (Input.GetKeyDown (KeyCode.Escape)) {

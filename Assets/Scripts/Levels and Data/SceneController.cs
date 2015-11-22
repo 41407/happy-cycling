@@ -17,6 +17,7 @@ public class SceneController : MonoBehaviour
 	public float levelTimeElapsed = 0;
 	private bool restartEnabled = false;
 	public float catProbability = 0.3f;
+	public bool endingCutscene = false;
 
 	void Awake ()
 	{
@@ -32,7 +33,7 @@ public class SceneController : MonoBehaviour
 	{
 		InitializeLevel ();
 		aud.PlayOneShot (levelStart);
-		GameObject.Find ("Music").SendMessage ("Play");
+		GameObject.Find ("Music").SendMessage ("PlayGameMusic");
 	}
 
 	void Restart ()
@@ -63,7 +64,7 @@ public class SceneController : MonoBehaviour
 		if (player.transform.position.y < -5) {
 			player.SendMessage ("Crash");
 		}
-		if (Input.GetKeyDown (KeyCode.Escape)) {
+		if (Input.GetKeyDown (KeyCode.Escape) && !endingCutscene) {
 			ExitGame ();
 		}
 		if (!paused) {
@@ -182,6 +183,7 @@ public class SceneController : MonoBehaviour
 	void GameCompleted ()
 	{
 		paused = true;
+		endingCutscene = true;
 		Time.timeScale = 1;
 		GameObject.Find ("Music").SendMessage ("Stop");
 		if (TimeRecord ()) {
