@@ -29,6 +29,9 @@ public class CatLogic : MonoBehaviour
 			}
 		} else if (fleeing) {
 			transform.Translate (Vector2.right * fleeSpeed * Time.deltaTime);
+			RaycastHit2D hit = Physics2D.Raycast ((Vector2)transform.position + Vector2.up, Vector2.down);
+			Vector2 normal = hit.normal;
+			transform.rotation = Quaternion.LookRotation (normal, Vector3.back);	
 		}
 	}
 
