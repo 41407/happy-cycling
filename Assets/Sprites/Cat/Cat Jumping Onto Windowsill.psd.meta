@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8e4a3760486fa4fd7b19e75a9de3370e
-timeCreated: 1448053076
+timeCreated: 1448191880
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -101,7 +101,7 @@ TextureImporter:
     - name: Cat Jumping Onto Windowsill_4
       rect:
         serializedVersion: 2
-        x: 65
+        x: 64
         y: 0
         width: 16
         height: 16
