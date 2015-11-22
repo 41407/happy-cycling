@@ -3,8 +3,8 @@ using System.Collections;
 
 public class SceneController : MonoBehaviour
 {
-	private GameObject playerPrefab;
-	private GameObject catPrefab;
+	public GameObject playerPrefab;
+	public GameObject catPrefab;
 	private GameObject player;
 	private BikeController playerController;
 	private Camera cam;
@@ -22,8 +22,6 @@ public class SceneController : MonoBehaviour
 	void Awake ()
 	{
 		aud = GetComponent<AudioSource> ();
-		playerPrefab = (GameObject)Resources.Load ("Prefabs/Player");
-		catPrefab = (GameObject)Resources.Load ("Prefabs/Cat");
 		cam = Camera.main;
 		levelWidth = cam.GetComponent<CameraController> ().levelWidth;
 		builder = GameObject.Find ("Game Controller").GetComponent<LevelBuilder> ();

@@ -5,7 +5,7 @@ public class BikeController : MonoBehaviour
 {
 
 #region Dependencies
-	private GameObject ragdollPrefab;
+	public GameObject ragdollPrefab;
 	private GameObject rider;
 	private Rigidbody2D body;
 	private AudioSource audioSource;
@@ -53,7 +53,6 @@ public class BikeController : MonoBehaviour
 	void Awake ()
 	{
 		audioSource = GetComponent<AudioSource> ();
-		ragdollPrefab = (GameObject)Resources.Load ("Prefabs/Downed Rider");
 		body = GetComponent<Rigidbody2D> ();
 		body.centerOfMass = bodyCenterOfMass;
 		rider = transform.FindChild ("Rider").gameObject;

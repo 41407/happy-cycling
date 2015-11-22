@@ -13,6 +13,7 @@ public class MainMenuController : MonoBehaviour
 	{
 		DontDestroyOnLoad (gameObject);
 		GameObject.Find ("Player").SendMessage ("Go");
+		GameObject.Find ("Player").SendMessage ("Pause");
 		GameObject.Find ("Music").SendMessage ("Stop");
 		Invoke ("StartMusic", musicStartDelay);
 	}
