@@ -68,7 +68,9 @@ public class SceneController : MonoBehaviour
 		if (!paused) {
 			levelTimeElapsed += Time.deltaTime;
 		}
-		DebugKeyCommands ();
+		if (Input.GetKey(KeyCode.LeftControl)) {
+			DebugKeyCommands ();
+		}
 	}
 	
 	void OnDisable ()
@@ -143,7 +145,7 @@ public class SceneController : MonoBehaviour
 	
 	private void SpawnPlayer ()
 	{
-		Vector2 viewTopLeftCorner = Vector2.left * 7.0f + Vector2.up * 4.5f;
+		Vector2 viewTopLeftCorner = new Vector2(-7, 4.5f);
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopLeftCorner, Vector2.down);
 		player = (GameObject)Instantiate (playerPrefab, hit.point, Quaternion.identity);
 		player.transform.parent = transform;
@@ -159,10 +161,9 @@ public class SceneController : MonoBehaviour
 	private void SpawnCat ()
 	{
 		if (Random.value < catProbability) {
-			Vector2 viewTopRightCorner = Vector2.right * (7.0f + levelWidth) + Vector2.up * 4.5f;
+			Vector2 viewTopRightCorner = new Vector2(7 + levelWidth, 4.5f);
 			RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopRightCorner, Vector2.down);
-			Vector2 normal = hit.normal;
-			Instantiate (catPrefab, hit.point, Quaternion.LookRotation (normal, Vector3.back));	
+			((GameObject)Instantiate (catPrefab, hit.point, Quaternion.LookRotation (hit.normal, Vector3.back))).transform.parent = transform;	
 		}
 	}
 
@@ -192,7 +193,6 @@ public class SceneController : MonoBehaviour
 			print ("New crashes record!");
 			PlayerPrefs.SetInt ("CrashesRecord", Score.GetCrashes ());
 		}
-		Score.Reset ();
 		PlayerPrefs.DeleteKey ("Level");
 		PlayerPrefs.DeleteKey ("Time");
 		PlayerPrefs.DeleteKey ("Crashes");

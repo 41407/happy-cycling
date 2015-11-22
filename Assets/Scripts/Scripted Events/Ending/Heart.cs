@@ -6,7 +6,7 @@ public class Heart : MonoBehaviour
 	private SpriteRenderer rend;
 	public Color finalColor;
 
-	void Start ()
+	void Awake ()
 	{
 		rend = GetComponent<SpriteRenderer> ();
 	}

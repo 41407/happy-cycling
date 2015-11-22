@@ -16,13 +16,12 @@ public class PlayerInput : MonoBehaviour
 				SendMessage ("Go");
 				SendMessage ("Jump");
 			}
-			if (Input.GetKeyDown (KeyCode.E)) {
-				SendMessage ("Crash");
-			}
 			if ((mouseControlled && Input.GetButton ("Jump")) || (!mouseControlled && Input.GetMouseButton (0))) {
 				mouseControlled = !mouseControlled;
 				if (!mouseControlled) {
 					UnityEngine.Cursor.visible = false;
+				} else {
+					UnityEngine.Cursor.visible = true;
 				}
 				paused = true;
 				Invoke ("Continue", 0.5f);

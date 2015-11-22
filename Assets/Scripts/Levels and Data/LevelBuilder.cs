@@ -9,8 +9,8 @@ public class LevelBuilder : MonoBehaviour
 
 	void Start ()
 	{
-		builtLevels = new List<int> ();
 		DontDestroyOnLoad (gameObject);
+		Reset ();
 		StartCoroutine (LoadLevels ());
 	}
 	
@@ -39,7 +39,7 @@ public class LevelBuilder : MonoBehaviour
 
 	public void Reset ()
 	{
-		builtLevels.Clear ();
+		builtLevels = new List<int> ();
 		transform.DetachChildren ();
 	}
 }

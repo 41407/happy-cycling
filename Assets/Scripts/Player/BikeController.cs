@@ -20,32 +20,28 @@ public class BikeController : MonoBehaviour
 	private bool grounded;
 	private bool crashed = false;
 	private bool rearWheelDown = true;
+	private float jumpTorque;
+	private float jumpStrength = 0;
 #endregion
 
+#region PhysicsParameters
 	[Space]
-	#region PhysicsParameters
-	public Vector2
-		bodyCenterOfMass = new Vector2 (-0.1f, 0.4f);
+	public Vector2 bodyCenterOfMass = new Vector2 (-0.1f, 0.4f);
 	[Header("Speed")]
-	public float
-		maxSpeed = 5;
+	public float maxSpeed = 5;
 	public float maxSpeedLerp = 0.01f;
 	public float acceleration = 15;
 	public float groundedStaticTorque = 0.1f;
 	public float pumpSpeedBoost = 3;
 	public float jumpSpeedBoost = 7;
 	[Header("Pump")]
-	public float
-		groundedPumpTorque = 500;
+	public float groundedPumpTorque = 500;
 	public float aerialPumpStrength = -100;
 	[Header("Jump")]
-	public float
-		ungroundGraceTime = 0.05f;
+	public float ungroundGraceTime = 0.05f;
 	public float maxJumpStrength = 2000;
 	public float groundedJumpTorque = -50;
 	public float aerialJumpTorque = -100;
-	private float jumpTorque;
-	private float jumpStrength = 0;
 	public float landStrength = 200;
 #endregion
 
@@ -94,7 +90,7 @@ public class BikeController : MonoBehaviour
 	}
 #endregion
 
-	#region BasicStates
+#region BasicStates
 	void Go ()
 	{
 		if (!crashed) {
@@ -145,6 +141,7 @@ public class BikeController : MonoBehaviour
 	{
 		GameObject downedRider = (GameObject)Instantiate (ragdollPrefab, transform.position, transform.rotation);
 		downedRider.SendMessage ("SetVelocity", body.velocity);
+		downedRider.transform.parent = transform.parent;
 	}
 
 	void Pump ()
@@ -187,12 +184,11 @@ public class BikeController : MonoBehaviour
 	void Jump ()
 	{
 		if (!crashed && started) {
+			CancelInvoke ();
 			if (rearWheelDown || grounded) {
-				CancelInvoke ();
 				GroundJump ();
 			}
 			if (!grounded) {
-				CancelInvoke ();
 				AerialJump ();
 			}
 		}
