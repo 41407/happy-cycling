@@ -12,6 +12,7 @@ public class MainMenuController : MonoBehaviour
 	void Start ()
 	{
 		DontDestroyOnLoad (gameObject);
+		UnityEngine.Cursor.visible = true;
 		GameObject.Find ("Player").SendMessage ("Go");
 		GameObject.Find ("Player").SendMessage ("Pause");
 		GameObject.Find ("Music").SendMessage ("Stop");
