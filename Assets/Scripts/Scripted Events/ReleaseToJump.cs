@@ -22,7 +22,7 @@ public class ReleaseToJump : MonoBehaviour
 				tutorialTriggered = true;
 				transform.GetChild (0).gameObject.SetActive (true);
 			}
-			if (tutorialTriggered == true && (Input.GetKeyUp (KeyCode.Space) || Input.GetMouseButtonUp (0))) {
+			if (tutorialTriggered == true && (Input.GetButtonUp ("Jump") || Input.GetMouseButtonUp (0))) {
 				sc.SendMessage ("SetPaused", false);
 				Destroy (gameObject);
 			}

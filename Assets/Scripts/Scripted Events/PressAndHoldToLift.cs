@@ -22,7 +22,7 @@ public class PressAndHoldToLift : MonoBehaviour
 				tutorialTriggered = true;
 				transform.GetChild (0).gameObject.SetActive (true);
 			}
-			if (tutorialTriggered == true && (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0))) {
+			if (tutorialTriggered == true && (Input.GetButtonDown ("Jump") || Input.GetMouseButtonDown (0))) {
 				sc.SendMessage ("SetPaused", false);
 				Destroy (gameObject);
 			}

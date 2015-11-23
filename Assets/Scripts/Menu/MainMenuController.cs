@@ -41,7 +41,7 @@ public class MainMenuController : MonoBehaviour
 
 	void Update ()
 	{
-		if ((Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0)) && state >= 4) {
+		if ((Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0) || Input.GetKeyDown(KeyCode.Return)) && state >= 4) {
 			NextScene ();
 		}
 		if (Input.GetKeyDown (KeyCode.Escape)) {
