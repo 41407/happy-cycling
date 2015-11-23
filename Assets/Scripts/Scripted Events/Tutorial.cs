@@ -1,11 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-public class PressAndHoldToLift : MonoBehaviour
+public class Tutorial : MonoBehaviour
 {
-	public GameObject player;
-	public SceneController sc;
-	public bool tutorialTriggered = false;
+	private GameObject player;
+	private SceneController sc;
+	private bool tutorialTriggered = false;
+	public RequiredAction requiredAction = RequiredAction.pump;
+
+	public enum RequiredAction {
+		pump,
+		jump
+	}
 
 	void Start ()
 	{
@@ -22,10 +28,19 @@ public class PressAndHoldToLift : MonoBehaviour
 				tutorialTriggered = true;
 				transform.GetChild (0).gameObject.SetActive (true);
 			}
-			if (tutorialTriggered == true && (Input.GetButtonDown ("Jump") || Input.GetMouseButtonDown (0))) {
+			if (tutorialTriggered == true && CorrectInput ()) {
 				sc.SendMessage ("SetPaused", false);
 				Destroy (gameObject);
 			}
+		}
+	}
+
+	bool CorrectInput ()
+	{
+		if (requiredAction == RequiredAction.pump) {
+			return (Input.GetButtonDown ("Jump") || Input.GetMouseButtonDown (0));
+		} else {
+			return (Input.GetButtonUp ("Jump") || Input.GetMouseButtonUp (0));	
 		}
 	}
 }
