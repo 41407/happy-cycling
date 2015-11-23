@@ -4,7 +4,6 @@ using System.Collections;
 public class PlayerInput : MonoBehaviour
 {
 	private bool paused = false;
-	private bool mouseControlled = true;
 	private InputMethod previousInput = InputMethod.none;
 
 	private enum InputMethod
