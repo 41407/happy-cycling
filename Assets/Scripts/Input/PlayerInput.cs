@@ -5,10 +5,11 @@ public class PlayerInput : MonoBehaviour
 {
 	private bool paused = false;
 	private bool mouseControlled = true;
-	private InputMethod previousInput;
+	private InputMethod previousInput = InputMethod.none;
 
 	private enum InputMethod
 	{
+		none,
 		mouse,
 		button
 	}
@@ -46,12 +47,12 @@ public class PlayerInput : MonoBehaviour
 	void CheckIfInputMethodChanged ()
 	{
 		InputMethod current = Input.GetButtonDown ("Jump") ? InputMethod.button : InputMethod.mouse;
-		if (previousInput != null && previousInput != current) {
+		if (previousInput != InputMethod.none && previousInput != current) {
 			paused = true;
 			Invoke ("Continue", 0.5f);
 			UnityEngine.Cursor.visible = Input.GetMouseButtonDown (0);
-			previousInput = current;
 		}
+		previousInput = current;
 	}
 
 	void Pause ()
