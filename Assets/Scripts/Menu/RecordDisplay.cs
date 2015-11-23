@@ -3,13 +3,12 @@ using System.Collections;
 
 public class RecordDisplay : MonoBehaviour
 {
-
-	public float startTranslateTime = 0;
 	private Vector3 startPosition;
 	private Vector3 targetPosition;
+	private bool finished = false;
+	public float startTranslateTime = 0;
 	public Vector3 finalPosition;
 	public float finishTime = 1;
-	public bool finished = false;
 
 	void Start ()
 	{
@@ -33,9 +32,9 @@ public class RecordDisplay : MonoBehaviour
 
 	void Finish ()
 	{
-		transform.position = targetPosition;
-		GameObject.Find ("Main Menu Controller").SendMessage ("Advance");
 		finished = true;
+		transform.position = targetPosition;
+		SendMessageUpwards ("Advance");
 	}
 
 	void Update ()

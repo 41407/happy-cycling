@@ -3,9 +3,8 @@ using System.Collections;
 
 public class Splash : MonoBehaviour
 {
-
-	public float startTranslateTime = 0;
 	private Vector2 targetPosition;
+	public float startTranslateTime = 0;
 	public Vector2 finalPosition;
 	public float finishTime = 2;
 
@@ -29,7 +28,7 @@ public class Splash : MonoBehaviour
 	void Finish ()
 	{
 		transform.position = targetPosition;
-		GameObject.Find ("Main Menu Controller").SendMessage ("Advance");
+		SendMessageUpwards ("Advance", SendMessageOptions.DontRequireReceiver);
 		Destroy (this);
 	}
 

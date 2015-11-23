@@ -10,6 +10,9 @@ public class PlayOnStart : MonoBehaviour {
 
 	void Awake () {
 		aud = GetComponent<AudioSource> ();
+	}
+
+	void Start () {
 		Invoke ("Play", delay);
 	}
 

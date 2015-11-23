@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Helmet : MonoBehaviour
 {
-
 	private Rigidbody2D body;
 	private AudioSource aud;
 	public AudioClip hit;

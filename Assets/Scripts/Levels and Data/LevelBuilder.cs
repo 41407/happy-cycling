@@ -30,16 +30,16 @@ public class LevelBuilder : MonoBehaviour
 			}
 		}
 	}
+	
+	public void Reset ()
+	{
+		builtLevels = new List<int> ();
+		transform.DetachChildren ();
+	}
 
 	IEnumerator LoadLevels ()
 	{
 		levels = Resources.LoadAll ("Levels/");
 		yield return new WaitForEndOfFrame ();
-	}
-
-	public void Reset ()
-	{
-		builtLevels = new List<int> ();
-		transform.DetachChildren ();
 	}
 }

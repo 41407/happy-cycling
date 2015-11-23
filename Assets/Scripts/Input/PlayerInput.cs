@@ -27,18 +27,17 @@ public class PlayerInput : MonoBehaviour
 		}
 	}
 
-	private bool KeyDown ()
+	bool KeyDown ()
 	{
 		return Input.GetMouseButtonDown (0) || Input.GetButtonDown ("Jump");
 	}
 	
-	private bool KeyUp ()
+	bool KeyUp ()
 	{
-
 		return Input.GetMouseButtonUp (0) || Input.GetButtonUp ("Jump");
 	}
 	
-	private bool Key ()
+	bool Key ()
 	{
 		return Input.GetMouseButton (0) || Input.GetButton ("Jump");
 	}

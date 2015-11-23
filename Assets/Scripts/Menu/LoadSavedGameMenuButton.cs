@@ -7,9 +7,9 @@ public class LoadSavedGameMenuButton : MonoBehaviour
 	private SpriteColorFlash spriteFlash;
 	private AudioSource aud;
 	private Collider2D col;
-	private bool selectedInitial;
+	private bool selectedOnAwake;
 	private bool mouseMode = false;
-	private Vector3 mousePosition;
+	private Vector3 previousMousePosition;
 	public AudioClip selectedSound;
 	public string message;
 	public bool selected;
@@ -20,12 +20,12 @@ public class LoadSavedGameMenuButton : MonoBehaviour
 		menuController = GameObject.Find ("Load Saved Game Menu Controller").GetComponent<LoadSavedGameMenuController> ();
 		spriteFlash = GetComponent<SpriteColorFlash> ();
 		col = GetComponent<Collider2D> ();
-		selectedInitial = selected;
+		selectedOnAwake = selected;
 	}
 
 	void Update ()
 	{
-		bool previousSelected = selected;
+		bool previousState = selected;
 		if (mouseMode) {
 			MouseInput ();
 		} else {
@@ -33,7 +33,7 @@ public class LoadSavedGameMenuButton : MonoBehaviour
 		}
 		CheckInputMethod ();
 		spriteFlash.enabled = selected;
-		if (previousSelected != selected && selected) {
+		if (previousState != selected && selected) {
 			aud.PlayOneShot (selectedSound);
 		}
 	}
@@ -63,14 +63,14 @@ public class LoadSavedGameMenuButton : MonoBehaviour
 
 	void CheckInputMethod ()
 	{
-		Vector3 currentMousePosition = Input.mousePosition;
-		if (!currentMousePosition.Equals (mousePosition)) {
+		Vector3 newMousePosition = Input.mousePosition;
+		if (!newMousePosition.Equals (previousMousePosition)) {
 			mouseMode = true;
 		} else if (mouseMode && Input.anyKeyDown) {
 			mouseMode = false;
-			selected = selectedInitial;
+			selected = selectedOnAwake;
 		}
-		mousePosition = currentMousePosition;
+		previousMousePosition = newMousePosition;
 	}
 
 	bool AcceptKeysDown ()

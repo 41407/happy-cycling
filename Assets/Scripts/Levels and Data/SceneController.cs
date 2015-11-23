@@ -3,21 +3,21 @@ using System.Collections;
 
 public class SceneController : MonoBehaviour
 {
-	public GameObject playerPrefab;
-	public GameObject catPrefab;
+	private LevelBuilder builder;
+	private Camera cam;
 	private GameObject player;
 	private BikeController playerController;
-	private Camera cam;
-	private float levelWidth;
-	public bool paused = false;
 	private AudioSource aud;
+	private float levelWidth;
+	private bool restartEnabled = false;
 	public AudioClip levelStart;
-	private LevelBuilder builder;
+	public GameObject playerPrefab;
+	public GameObject catPrefab;
+	private bool paused = false;
 	public bool editorMode = false;
 	public float levelTimeElapsed = 0;
-	private bool restartEnabled = false;
 	public float catProbability = 0.3f;
-	public bool endingCutscene = false;
+	private bool endingCutscene = false;
 
 	void Awake ()
 	{
@@ -68,7 +68,7 @@ public class SceneController : MonoBehaviour
 		if (!paused) {
 			levelTimeElapsed += Time.deltaTime;
 		}
-		if (Input.GetKey(KeyCode.LeftControl)) {
+		if (Input.GetKey (KeyCode.LeftControl) || Input.GetKeyDown (KeyCode.LeftControl)) {
 			DebugKeyCommands ();
 		}
 	}
@@ -78,33 +78,13 @@ public class SceneController : MonoBehaviour
 		Time.timeScale = 1;
 	}
 
-	void DebugKeyCommands ()
-	{
-		if (Input.GetKeyDown (KeyCode.R) && Input.GetKey (KeyCode.LeftShift)) {
-			PlayerPrefs.SetInt ("Level", 0);
-			PlayerPrefs.SetInt ("Crashes", 0);
-			restartEnabled = true;
-			Restart ();
-		} else if (Input.GetKeyDown (KeyCode.R)) {
-			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") - 1);
-			restartEnabled = true;
-			Restart ();
-		} else if (Input.GetKeyDown (KeyCode.T)) {
-			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") + 1);
-			restartEnabled = true;
-			Restart ();
-		} else if (Input.GetKeyDown (KeyCode.P)) {
-			SetPaused (!paused);
-		}
-	}
-
 	void ExitGame ()
 	{
 		builder.Reset ();
 		Application.LoadLevelAsync ("Main Menu");
 	}
 
-	private void SetPaused (bool pause)
+	void SetPaused (bool pause)
 	{
 		if (pause) {
 			player.SendMessage ("Pause");
@@ -116,7 +96,7 @@ public class SceneController : MonoBehaviour
 		paused = pause;
 	}
 
-	private void CameraFinishedPanning ()
+	void CameraFinishedPanning ()
 	{
 		SetPaused (false);
 	}
@@ -131,7 +111,7 @@ public class SceneController : MonoBehaviour
 		restartEnabled = true;
 	}
 
-	private void InitializeLevel ()
+	void InitializeLevel ()
 	{
 		if (!editorMode) {
 			int level = PlayerPrefs.GetInt ("Level");
@@ -143,7 +123,7 @@ public class SceneController : MonoBehaviour
 		SpawnPlayer ();
 	}
 	
-	private void SpawnPlayer ()
+	void SpawnPlayer ()
 	{
 		Vector2 viewTopLeftCorner = new Vector2(-7, 4.5f);
 		RaycastHit2D hit = Physics2D.Raycast ((Vector2)cam.transform.position + viewTopLeftCorner, Vector2.down);
@@ -153,12 +133,12 @@ public class SceneController : MonoBehaviour
 		Invoke ("PlayerGo", 0.16f);
 	}
 
-	private void PlayerGo ()
+	void PlayerGo ()
 	{
 		player.SendMessage ("Go");
 	}
 
-	private void SpawnCat ()
+	void SpawnCat ()
 	{
 		if (Random.value < catProbability) {
 			Vector2 viewTopRightCorner = new Vector2(7 + levelWidth, 4.5f);
@@ -167,16 +147,11 @@ public class SceneController : MonoBehaviour
 		}
 	}
 
-	private bool PlayerHasCompletedLevel ()
+	bool PlayerHasCompletedLevel ()
 	{
 		return (player.transform.position.x > cam.transform.position.x + 7.5f)
 			&& !playerController.GetCrashed ()
-			&& CameraNotPanning ();
-	}
-
-	private bool CameraNotPanning ()
-	{
-		return !cam.GetComponent<CameraController> ().panning;
+			&& !cam.GetComponent<CameraController> ().panning;
 	}
 	
 	void GameCompleted ()
@@ -211,5 +186,25 @@ public class SceneController : MonoBehaviour
 	bool CrashesRecord ()
 	{
 		return !PlayerPrefs.HasKey ("CrashesRecord") || PlayerPrefs.GetInt ("CrashesRecord") > Score.GetCrashes ();
+	}
+
+	void DebugKeyCommands ()
+	{
+		if (Input.GetKeyDown (KeyCode.R) && Input.GetKey (KeyCode.LeftShift)) {
+			PlayerPrefs.SetInt ("Level", 0);
+			PlayerPrefs.SetInt ("Crashes", 0);
+			restartEnabled = true;
+			Restart ();
+		} else if (Input.GetKeyDown (KeyCode.R)) {
+			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") - 1);
+			restartEnabled = true;
+			Restart ();
+		} else if (Input.GetKeyDown (KeyCode.T)) {
+			PlayerPrefs.SetInt ("Level", PlayerPrefs.GetInt ("Level") + 1);
+			restartEnabled = true;
+			Restart ();
+		} else if (Input.GetKeyDown (KeyCode.P)) {
+			SetPaused (!paused);
+		}
 	}
 }

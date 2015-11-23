@@ -12,8 +12,8 @@ public class MusicController : MonoBehaviour
 
 	void Awake ()
 	{
-		aud = GetComponent<AudioSource> ();
 		DontDestroyOnLoad (this.gameObject);
+		aud = GetComponent<AudioSource> ();
 	}
 
 	void Update ()

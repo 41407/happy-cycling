@@ -3,23 +3,21 @@ using System.Collections;
 
 public class MainMenuController : MonoBehaviour
 {
+	public int state = 0;
 	public string gameSceneName;
 	public string loadSavedGameSceneName;
-	private AsyncOperation async;
-	public int state = 0;
 	public float musicStartDelay = 1;
 
 	void Start ()
 	{
-		DontDestroyOnLoad (gameObject);
 		UnityEngine.Cursor.visible = true;
 		GameObject.Find ("Player").SendMessage ("Go");
 		GameObject.Find ("Player").SendMessage ("Pause");
 		GameObject.Find ("Music").SendMessage ("Stop");
-		Invoke ("StartMusic", musicStartDelay);
+		Invoke ("StartMenuMusic", musicStartDelay);
 	}
 
-	void StartMusic ()
+	void StartMenuMusic ()
 	{
 		GameObject.Find ("Music").SendMessage ("PlayMenuMusic");
 	}
@@ -27,10 +25,10 @@ public class MainMenuController : MonoBehaviour
 	void NextScene ()
 	{
 		if (PlayerPrefs.HasKey ("Level")) {
-			async = Application.LoadLevelAsync (loadSavedGameSceneName);
+			Application.LoadLevelAsync (loadSavedGameSceneName);
 		} else {
 			Score.Reset ();
-			async = Application.LoadLevelAsync (gameSceneName);
+			Application.LoadLevelAsync (gameSceneName);
 		}
 	}
 
@@ -41,7 +39,7 @@ public class MainMenuController : MonoBehaviour
 
 	void Update ()
 	{
-		if ((Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0) || Input.GetKeyDown(KeyCode.Return)) && state >= 4) {
+		if ((Input.GetButtonDown ("Jump") || Input.GetMouseButtonDown (0) || Input.GetKeyDown(KeyCode.Return)) && state >= 4) {
 			NextScene ();
 		}
 		if (Input.GetKeyDown (KeyCode.Escape)) {
@@ -49,11 +47,6 @@ public class MainMenuController : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.R)) {
 			PlayerPrefs.DeleteAll ();
-		}
-		if (async != null) {
-			if (async.isDone) {
-				Destroy (gameObject);
-			}
 		}
 	}
 }

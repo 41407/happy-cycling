@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Tutorial : MonoBehaviour
 {
-	private GameObject player;
+	private Transform player;
 	private SceneController sc;
 	private bool tutorialTriggered = false;
 	public RequiredAction requiredAction = RequiredAction.pump;
@@ -16,19 +16,18 @@ public class Tutorial : MonoBehaviour
 	void Start ()
 	{
 		sc = GameObject.Find ("Scene Controller").GetComponent<SceneController> ();
+		player = GameObject.FindGameObjectWithTag ("Player").transform;
 	}
 
 	void Update ()
 	{
-		if (!player) {
-			player = GameObject.FindGameObjectWithTag ("Player");
-		} else if (!player.GetComponent<BikeController> ().GetCrashed ()) {
-			if ((player.transform.position.x > transform.position.x && player.transform.position.x < transform.position.x + 1) && tutorialTriggered == false) {
-				sc.SendMessage ("SetPaused", true);
+		if (!player.GetComponent<BikeController> ().GetCrashed ()) {
+			if (player.position.x > transform.position.x && player.position.x < transform.position.x + 1 && !tutorialTriggered) {
 				tutorialTriggered = true;
+				sc.SendMessage ("SetPaused", true);
 				transform.GetChild (0).gameObject.SetActive (true);
 			}
-			if (tutorialTriggered == true && CorrectInput ()) {
+			if (tutorialTriggered && CorrectInput ()) {
 				sc.SendMessage ("SetPaused", false);
 				Destroy (gameObject);
 			}
@@ -38,9 +37,9 @@ public class Tutorial : MonoBehaviour
 	bool CorrectInput ()
 	{
 		if (requiredAction == RequiredAction.pump) {
-			return (Input.GetButtonDown ("Jump") || Input.GetMouseButtonDown (0));
+			return Input.GetButtonDown ("Jump") || Input.GetMouseButtonDown (0);
 		} else {
-			return (Input.GetButtonUp ("Jump") || Input.GetMouseButtonUp (0));	
+			return Input.GetButtonUp ("Jump") || Input.GetMouseButtonUp (0);	
 		}
 	}
 }
