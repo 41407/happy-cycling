@@ -5,11 +5,13 @@ public class Init : MonoBehaviour
 {
 	void Start ()
 	{
-		Invoke ("LoadLevel", 1.0f);
+		StartCoroutine (LoadLevel (1.0f));
+
 	}
 
-	void LoadLevel ()
+	IEnumerator LoadLevel (float time)
 	{
+		yield return new WaitForSeconds (time);
 		Application.LoadLevelAsync ("Main Menu");
 	}
 }
