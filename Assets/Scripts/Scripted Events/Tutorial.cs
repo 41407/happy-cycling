@@ -23,6 +23,7 @@ public class Tutorial : MonoBehaviour
 	{
 		if (!player.GetComponent<BikeController> ().GetCrashed ()) {
 			if (player.position.x > transform.position.x && player.position.x < transform.position.x + 1 && !tutorialTriggered) {
+                SendMessageUpwards("OnTutorialTriggered");
 				tutorialTriggered = true;
 				sc.SendMessage ("SetPaused", true);
 				transform.GetChild (0).gameObject.SetActive (true);

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
 
 [InitializeOnLoad]
@@ -63,3 +64,4 @@ static class DevelopmentMenu
 		}
 	}
 }
+#endif
