@@ -5,6 +5,7 @@ public class TutorialInputDisabler : MonoBehaviour
 {
 	private Transform player;
 	private bool tutorialTriggered = false;
+    public GameObject tutorialCompletedPrefab;
 
 	void Start ()
 	{
@@ -22,8 +23,11 @@ public class TutorialInputDisabler : MonoBehaviour
         }
 	}
     
-    void OnTutorialTriggered() {
+    void OnTutorialTriggered(bool lastStep) {
         player.SendMessage("Continue");
         tutorialTriggered = true;
+        if(lastStep) {
+            Instantiate(tutorialCompletedPrefab, transform.position + new Vector3(11.5f, 2.5f, 0), Quaternion.identity);
+        }
     }
 }

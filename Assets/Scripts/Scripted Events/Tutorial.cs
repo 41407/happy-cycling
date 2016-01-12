@@ -7,6 +7,7 @@ public class Tutorial : MonoBehaviour
 	private SceneController sc;
 	private bool tutorialTriggered = false;
 	public RequiredAction requiredAction = RequiredAction.pump;
+    public bool lastTutorialInScreen = true;
 
 	public enum RequiredAction {
 		pump,
@@ -23,13 +24,13 @@ public class Tutorial : MonoBehaviour
 	{
 		if (!player.GetComponent<BikeController> ().GetCrashed ()) {
 			if (player.position.x > transform.position.x && player.position.x < transform.position.x + 1 && !tutorialTriggered) {
-                SendMessageUpwards("OnTutorialTriggered");
 				tutorialTriggered = true;
 				sc.SendMessage ("SetPaused", true);
 				transform.GetChild (0).gameObject.SetActive (true);
 			}
 			if (tutorialTriggered && CorrectInput ()) {
 				sc.SendMessage ("SetPaused", false);
+                SendMessageUpwards("OnTutorialTriggered", lastTutorialInScreen);
 				Destroy (gameObject);
 			}
 		}
