@@ -15,7 +15,7 @@ public class TutorialInputDisabler : MonoBehaviour
 
 	void Update ()
 	{
-		if (player.position.x < transform.position.x || tutorialTriggered || player.GetComponent<BikeController> ().GetCrashed ()) {
+		if (player.position.x < transform.position.x || player.position.x > transform.position.x + 13 || tutorialTriggered || player.GetComponent<BikeController> ().GetCrashed ()) {
 			player.SendMessage("Continue");
         }
         if(player.position.x > transform.position.x && player.position.x < transform.position.x + 13 && !tutorialTriggered) {
