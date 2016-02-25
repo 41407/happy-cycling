@@ -6,8 +6,8 @@ public class Init : MonoBehaviour
 {
 	void Start ()
 	{
+    Application.targetFrameRate = 60;
 		StartCoroutine (LoadLevel (1.0f));
-
 	}
 
 	IEnumerator LoadLevel (float time)
