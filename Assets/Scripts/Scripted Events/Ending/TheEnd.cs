@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class TheEnd : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class TheEnd : MonoBehaviour
 			OnPlayerEnter ();
 		}
 		if (finished && Input.anyKeyDown) {
-			Application.LoadLevelAsync ("Main Menu");
+			SceneManager.LoadSceneAsync("Main Menu");
 		}
 		switch (stage) {
 		case 1:

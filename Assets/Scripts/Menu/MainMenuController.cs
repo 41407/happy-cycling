@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -25,10 +26,10 @@ public class MainMenuController : MonoBehaviour
 	void NextScene ()
 	{
 		if (PlayerPrefs.HasKey ("Level")) {
-			Application.LoadLevelAsync (loadSavedGameSceneName);
+			SceneManager.LoadSceneAsync (loadSavedGameSceneName);
 		} else {
 			Score.Reset ();
-			Application.LoadLevelAsync (gameSceneName);
+			SceneManager.LoadSceneAsync (gameSceneName);
 		}
 	}
 

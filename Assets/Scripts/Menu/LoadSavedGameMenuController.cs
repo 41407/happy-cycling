@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LoadSavedGameMenuController : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class LoadSavedGameMenuController : MonoBehaviour
 		PlayerPrefs.DeleteKey ("Time");
 		PlayerPrefs.DeleteKey ("Crashes");
 		PlayerPrefs.DeleteKey ("Timer Visible");
-		Application.LoadLevelAsync (gameScene);
+		SceneManager.LoadSceneAsync (gameScene);
 	}
 
 	void Continue ()
@@ -21,13 +22,13 @@ public class LoadSavedGameMenuController : MonoBehaviour
 		Score.Reset ();
 		Score.SetCrashes (PlayerPrefs.GetInt ("Crashes"));
 		Score.SetTime (PlayerPrefs.GetFloat ("Time"));
-		Application.LoadLevelAsync (gameScene);
+		SceneManager.LoadSceneAsync (gameScene);
 	}
 
 	void Update ()
 	{
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			Application.LoadLevelAsync (mainMenuScene);
+			SceneManager.LoadSceneAsync (mainMenuScene);
 		}
 	}
 }

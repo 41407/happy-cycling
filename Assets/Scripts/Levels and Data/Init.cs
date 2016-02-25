@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Init : MonoBehaviour
 {
@@ -12,6 +13,6 @@ public class Init : MonoBehaviour
 	IEnumerator LoadLevel (float time)
 	{
 		yield return new WaitForSeconds (time);
-		Application.LoadLevelAsync ("Main Menu");
+		SceneManager.LoadSceneAsync ("Main Menu");
 	}
 }

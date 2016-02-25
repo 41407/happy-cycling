@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class SceneController : MonoBehaviour
 		if (restartEnabled) {
 			Score.AddTime (levelTimeElapsed);
 			builder.Reset ();
-			Application.LoadLevel (Application.loadedLevel);
+			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene().name);
 		}
 	}
 
@@ -81,7 +82,7 @@ public class SceneController : MonoBehaviour
 	void ExitGame ()
 	{
 		builder.Reset ();
-		Application.LoadLevelAsync ("Main Menu");
+		SceneManager.LoadSceneAsync ("Main Menu");
 	}
 
 	void SetPaused (bool pause)
