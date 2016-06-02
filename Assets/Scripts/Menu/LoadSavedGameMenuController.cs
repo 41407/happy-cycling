@@ -28,7 +28,7 @@ public class LoadSavedGameMenuController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
             SceneManager.LoadSceneAsync(mainMenuScene);
         }

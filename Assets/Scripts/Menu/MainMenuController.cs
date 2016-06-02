@@ -48,15 +48,15 @@ public class MainMenuController : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return)) && state >= 4)
+        if ((Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Return)) && state >= 4)
         {
             NextScene();
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
             Application.Quit();
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R))
         {
             PlayerPrefs.DeleteAll();
         }
