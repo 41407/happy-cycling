@@ -91,6 +91,7 @@ public class SceneController : MonoBehaviour
     {
         builder.Reset();
         SceneManager.LoadSceneAsync("Main Menu");
+        gameObject.SetActive(false);
     }
 
     void SetPaused(bool pause)
