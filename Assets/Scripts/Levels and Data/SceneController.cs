@@ -43,6 +43,7 @@ public class SceneController : MonoBehaviour
             Score.AddTime(levelTimeElapsed);
             builder.Reset();
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+            gameObject.SetActive(false);
         }
     }
 
