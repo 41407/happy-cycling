@@ -3,30 +3,34 @@ using System.Collections;
 
 public class TutorialInputDisabler : MonoBehaviour
 {
-	private Transform player;
-	private bool tutorialTriggered = false;
+    private Transform player;
+    private bool tutorialTriggered = false;
     public GameObject tutorialCompletedPrefab;
 
-	void Start ()
-	{
-		player = GameObject.FindGameObjectWithTag ("Player").transform;
-        player.SendMessage("Pause");
-	}
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
+    }
 
-	void Update ()
-	{
-		if (player.position.x < transform.position.x || player.position.x > transform.position.x + 13 || tutorialTriggered || player.GetComponent<BikeController> ().GetCrashed ()) {
-			player.SendMessage("Continue");
+    void Update()
+    {
+        if (player.position.x < transform.position.x || player.position.x > transform.position.x + 13 || tutorialTriggered || player.GetComponent<BikeController>().GetCrashed())
+        {
+            player.SendMessage("Continue", SendMessageOptions.DontRequireReceiver);
         }
-        if(player.position.x > transform.position.x && player.position.x < transform.position.x + 13 && !tutorialTriggered) {
-            player.SendMessage("Pause");
+        if (player.position.x > transform.position.x && player.position.x < transform.position.x + 13 && !tutorialTriggered)
+        {
+            player.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
         }
-	}
-    
-    void OnTutorialTriggered(bool lastStep) {
-        player.SendMessage("Continue");
+    }
+
+    void OnTutorialTriggered(bool lastStep)
+    {
+        player.SendMessage("Continue", SendMessageOptions.DontRequireReceiver);
         tutorialTriggered = true;
-        if(lastStep) {
+        if (lastStep)
+        {
             Instantiate(tutorialCompletedPrefab, transform.position + new Vector3(11.5f, 2.5f, 0), Quaternion.identity);
         }
     }
