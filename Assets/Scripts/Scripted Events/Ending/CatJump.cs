@@ -15,7 +15,7 @@ public class CatJump : MonoBehaviour
 
 	void FinishAnimation ()
 	{
-		SendMessageUpwards ("AdvanceStage");
+		SendMessageUpwards ("AdvanceStage", SendMessageOptions.DontRequireReceiver);
 	}
 
 	void Update ()

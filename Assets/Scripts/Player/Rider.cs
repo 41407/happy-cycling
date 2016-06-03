@@ -53,6 +53,6 @@ public class Rider : MonoBehaviour
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
-		SendMessageUpwards ("Crash");
+		SendMessageUpwards ("Crash", SendMessageOptions.DontRequireReceiver);
 	}
 }
