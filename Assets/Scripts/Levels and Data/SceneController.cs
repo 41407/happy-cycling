@@ -88,7 +88,7 @@ public class SceneController : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    void ExitGame()
+    public void ExitGame()
     {
         builder.Reset();
         SceneManager.LoadSceneAsync("Main Menu");

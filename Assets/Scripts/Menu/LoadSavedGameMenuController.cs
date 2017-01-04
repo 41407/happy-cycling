@@ -32,6 +32,11 @@ public class LoadSavedGameMenuController : MonoBehaviour
         {
             SceneManager.LoadSceneAsync(mainMenuScene);
         }
+        else if (Input.GetKeyUp(KeyCode.F12))
+        {
+            PlayerPrefs.SetInt("Level", 85);
+            LoadGameScene();
+        }
     }
 
     void LoadGameScene()
