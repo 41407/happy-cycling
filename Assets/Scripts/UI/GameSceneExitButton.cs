@@ -15,7 +15,7 @@ public class GameSceneExitButton : MonoBehaviour
     {
         if (activationZone.Contains(Camera.main.ScreenToWorldPoint(Input.mousePosition)) && Input.GetMouseButtonUp(0))
         {
-            GameObject.Find("Scene Controller").SendMessage("ExitGame");
+            Component.FindObjectOfType<SceneController>().ExitGame();
         }
     }
 }
