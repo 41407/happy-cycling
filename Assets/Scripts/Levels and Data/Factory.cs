@@ -25,6 +25,8 @@ public class Factory : MonoBehaviour
     {
         ObjectPool.pool.Initialize(groundTouchParticle, 50);
     }
+	
+	
 
     GameObject InitializeParameters(GameObject created)
     {
