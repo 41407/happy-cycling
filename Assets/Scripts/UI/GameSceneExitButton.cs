@@ -6,13 +6,9 @@ public class GameSceneExitButton : MonoBehaviour
 
     public Bounds activationZone;
 
-    void Start()
-    {
-        activationZone.center = transform.position;
-    }
-
     void Update()
     {
+        activationZone.center = transform.position;
         if (activationZone.Contains(Camera.main.ScreenToWorldPoint(Input.mousePosition)) && Input.GetMouseButtonUp(0))
         {
             Component.FindObjectOfType<SceneController>().ExitGame();

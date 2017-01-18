@@ -15,23 +15,25 @@ public class TutorialInputDisabler : MonoBehaviour
 
     void Update()
     {
-        if (player.position.x < transform.position.x || player.position.x > transform.position.x + 13 || tutorialTriggered || player.GetComponent<BikeController>().GetCrashed())
+        if (player.position.x < transform.position.x || player.position.x > transform.position.x + 13 || player.GetComponent<BikeController>().GetCrashed())
         {
             player.SendMessage("Continue", SendMessageOptions.DontRequireReceiver);
         }
-        if (player.position.x > transform.position.x && player.position.x < transform.position.x + 13 && !tutorialTriggered)
+        if (player.position.x > transform.position.x && player.position.x < transform.position.x + 13)
         {
+            Component.FindObjectOfType<LetterboxController>().SetLetterboxEnabled(true);
             player.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
         }
     }
 
     void OnTutorialTriggered(bool lastStep)
     {
-        player.SendMessage("Continue", SendMessageOptions.DontRequireReceiver);
         tutorialTriggered = true;
         if (lastStep)
         {
+            Component.FindObjectOfType<LetterboxController>().SetLetterboxEnabled(false);
             Instantiate(tutorialCompletedPrefab, transform.position + new Vector3(11.5f, 2.5f, 0), Quaternion.identity);
+            this.enabled = false;
         }
     }
 }
