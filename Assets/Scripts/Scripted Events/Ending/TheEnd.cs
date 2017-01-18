@@ -70,6 +70,7 @@ public class TheEnd : MonoBehaviour
     void OnPlayerEnter()
     {
         sc.SendMessage("GameCompleted", true);
+        Component.FindObjectOfType<LetterboxController>().SetLetterboxEnabled(true);
         AdvanceStage();
     }
 
