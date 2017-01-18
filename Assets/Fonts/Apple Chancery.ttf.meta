@@ -3,17 +3,19 @@ guid: b341f7d5fe86e4e45899c559fbffd3dc
 timeCreated: 1444916747
 licenseType: Free
 TrueTypeFontImporter:
-  serializedVersion: 2
+  serializedVersion: 4
   fontSize: 144
   forceTextureCase: -2
-  characterSpacing: 1
-  characterPadding: 0
-  includeFontData: 0
-  use2xBehaviour: 0
-  fontNames: []
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Apple Chancery
+  fontNames:
+  - Apple Chancery
   fallbackFontReferences: []
   customCharacters: 1234567890:;.,
   fontRenderingMode: 2
+  ascentCalculationMode: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 
