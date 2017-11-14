@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class GameSceneExitButton : MonoBehaviour
 {
-
-    public Bounds activationZone;
-
-    void Update()
+    void OnClick()
     {
-        activationZone.center = transform.position;
-        if (activationZone.Contains(Camera.main.ScreenToWorldPoint(Input.mousePosition)) && Input.GetMouseButtonUp(0))
+        var sceneController = Component.FindObjectOfType<SceneController>();
+        if (sceneController == null)
         {
-            Component.FindObjectOfType<SceneController>().ExitGame();
+#if UNITY_EDITOR
+            Debug.LogError("SceneController not found!");
+#endif
+            return;
         }
+        sceneController.OnGameSceneExitButtonClick();
     }
 }

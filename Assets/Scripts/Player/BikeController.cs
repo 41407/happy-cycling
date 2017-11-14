@@ -55,7 +55,7 @@ public class BikeController : MonoBehaviour
 		audioSource = GetComponent<AudioSource> ();
 		body = GetComponent<Rigidbody2D> ();
 		body.centerOfMass = bodyCenterOfMass;
-		rider = transform.FindChild ("Rider").gameObject;
+		rider = transform.Find ("Rider").gameObject;
 	}
 
 	void FixedUpdate ()

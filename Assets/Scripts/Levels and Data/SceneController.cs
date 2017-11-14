@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SceneController : MonoBehaviour
 {
@@ -155,7 +156,7 @@ public class SceneController : MonoBehaviour
 
     void SpawnCat()
     {
-        if (Random.value < catProbability)
+        if (UnityEngine.Random.value < catProbability)
         {
             Vector2 viewTopRightCorner = new Vector2(7 + levelWidth, 4.5f);
             RaycastHit2D hit = Physics2D.Raycast((Vector2)cam.transform.position + viewTopRightCorner, Vector2.down);
@@ -204,6 +205,11 @@ public class SceneController : MonoBehaviour
     bool CrashesRecord()
     {
         return !PlayerPrefs.HasKey("CrashesRecord") || PlayerPrefs.GetInt("CrashesRecord") > Score.GetCrashes();
+    }
+
+    internal void OnGameSceneExitButtonClick()
+    {
+        ExitGame();
     }
 
     void DebugKeyCommands()
