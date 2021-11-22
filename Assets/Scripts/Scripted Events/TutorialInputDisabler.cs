@@ -15,10 +15,12 @@ public class TutorialInputDisabler : MonoBehaviour
 
     void Update()
     {
+        if (!player) return;
         if (player.position.x < transform.position.x || player.position.x > transform.position.x + 13 || player.GetComponent<BikeController>().GetCrashed())
         {
             player.SendMessage("Continue", SendMessageOptions.DontRequireReceiver);
         }
+
         if (player.position.x > transform.position.x && player.position.x < transform.position.x + 13)
         {
             Component.FindObjectOfType<LetterboxController>().SetLetterboxEnabled(true);

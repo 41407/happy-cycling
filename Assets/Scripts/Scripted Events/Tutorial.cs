@@ -23,6 +23,7 @@ public class Tutorial : MonoBehaviour
 
     void Update()
     {
+        if (!player) return;
         if (!player.GetComponent<BikeController>().GetCrashed())
         {
             if (player.position.x > transform.position.x && player.position.x < transform.position.x + 1 && !tutorialTriggered)
@@ -31,6 +32,7 @@ public class Tutorial : MonoBehaviour
                 sc.SendMessage("SetPaused", true);
                 transform.GetChild(0).gameObject.SetActive(true);
             }
+
             if (tutorialTriggered && CorrectInput())
             {
                 sc.SendMessage("SetPaused", false);
