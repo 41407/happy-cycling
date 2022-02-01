@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
@@ -48,7 +49,7 @@ public class MainMenuController : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Return)) && state >= 4)
+        if ((Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Return) || Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Ended).Count > 0) && state >= 4)
         {
             NextScene();
         }

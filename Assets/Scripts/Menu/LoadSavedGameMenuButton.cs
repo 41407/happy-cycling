@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class LoadSavedGameMenuButton : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class LoadSavedGameMenuButton : MonoBehaviour
         {
             KeyboardInput();
         }
+
         CheckInputMethod();
         spriteFlash.enabled = selected;
         if (previousState != selected && selected)
@@ -49,7 +51,10 @@ public class LoadSavedGameMenuButton : MonoBehaviour
         if (col.bounds.Contains(mousePosition))
         {
             selected = true;
-            if (Input.GetMouseButtonUp(0))
+            if (
+                Input.GetMouseButtonUp(0)
+                || Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Ended).Count > 0
+            )
             {
                 menuController.SendMessage(message);
             }
@@ -84,15 +89,16 @@ public class LoadSavedGameMenuButton : MonoBehaviour
             mouseMode = false;
             selected = selectedOnAwake;
         }
+
         previousMousePosition = newMousePosition;
     }
 
     bool AcceptKeysUp()
     {
         return Input.GetKeyUp(KeyCode.Space) ||
-            Input.GetKeyUp(KeyCode.Return) ||
-            Input.GetKeyUp(KeyCode.KeypadEnter) ||
-            Input.GetButtonUp("Jump");
+               Input.GetKeyUp(KeyCode.Return) ||
+               Input.GetKeyUp(KeyCode.KeypadEnter) ||
+               Input.GetButtonUp("Jump");
     }
 
     bool PlayerUsedKeyboard()

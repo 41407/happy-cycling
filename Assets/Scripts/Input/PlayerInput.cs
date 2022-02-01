@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class PlayerInput : MonoBehaviour
                 CheckIfInputMethodChanged();
                 SendMessage("Pump", SendMessageOptions.DontRequireReceiver);
             }
+
             if (KeyUp())
             {
                 SendMessage("Go", SendMessageOptions.DontRequireReceiver);
@@ -32,17 +34,26 @@ public class PlayerInput : MonoBehaviour
 
     bool KeyDown()
     {
-        return Input.GetMouseButtonDown(0) || Input.GetButtonDown("Jump");
+        return Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Began).Count > 0
+               || Input.GetMouseButtonDown(0)
+               || Input.GetButtonDown("Jump");
     }
 
     bool KeyUp()
     {
-        return Input.GetMouseButtonUp(0) || Input.GetButtonUp("Jump");
+        return Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Ended
+                                                   || t.phase == TouchPhase.Canceled).Count > 0
+               || Input.GetMouseButtonUp(0)
+               || Input.GetButtonUp("Jump");
     }
 
     bool Key()
     {
-        return Input.GetMouseButton(0) || Input.GetButton("Jump");
+        return
+            Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Moved
+                                                || t.phase == TouchPhase.Stationary).Count > 0
+            || Input.GetMouseButton(0)
+            || Input.GetButton("Jump");
     }
 
     void CheckIfInputMethodChanged()
@@ -54,6 +65,7 @@ public class PlayerInput : MonoBehaviour
             Invoke("Continue", 0.5f);
             UnityEngine.Cursor.visible = Input.GetMouseButtonDown(0);
         }
+
         previousInput = current;
     }
 
