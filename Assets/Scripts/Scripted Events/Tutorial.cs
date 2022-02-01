@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class Tutorial : MonoBehaviour
 {
@@ -46,11 +47,15 @@ public class Tutorial : MonoBehaviour
     {
         if (requiredAction == RequiredAction.pump)
         {
-            return Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0);
+            return Input.GetButtonDown("Jump")
+                   || Input.GetMouseButtonDown(0)
+                   || Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Began).Count > 0;
         }
         else
         {
-            return Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0);
+            return Input.GetButtonUp("Jump")
+                   || Input.GetMouseButtonUp(0)
+                   || Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Ended).Count > 0;
         }
     }
 }

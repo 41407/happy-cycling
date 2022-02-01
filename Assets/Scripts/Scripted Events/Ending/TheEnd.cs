@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using UnityEngine.SceneManagement;
 
 public class TheEnd : MonoBehaviour
@@ -29,10 +30,12 @@ public class TheEnd : MonoBehaviour
         {
             OnPlayerEnter();
         }
+
         if (finished && Input.anyKeyDown)
         {
             SceneManager.LoadSceneAsync("Main Menu");
         }
+
         switch (stage)
         {
             case 1:
@@ -55,12 +58,14 @@ public class TheEnd : MonoBehaviour
                 {
                     AdvanceStage();
                 }
+
                 break;
             case 6:
-                if (Input.anyKeyDown || Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
+                if (Input.anyKeyDown || Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0) || Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Began).Count > 0)
                 {
                     sc.SendMessage("ExitGame");
                 }
+
                 break;
             default:
                 break;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class Splash : MonoBehaviour
 {
@@ -38,11 +39,13 @@ public class Splash : MonoBehaviour
         {
             StartTranslate(0);
         }
+
         transform.position = Vector2.Lerp(transform.position, targetPosition, 0.1f);
     }
 
     bool AdvanceKeyPressed()
     {
-        return Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return);
+        return Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return) ||
+               Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Began).Count > 0;
     }
 }
