@@ -38,6 +38,7 @@ public class MainMenuController : MonoBehaviour
                 Score.Reset();
                 SceneManager.LoadSceneAsync(gameSceneName);
             }
+
             sceneIsLoading = true;
         }
     }
@@ -49,14 +50,26 @@ public class MainMenuController : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Return) || Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Ended).Count > 0) && state >= 4)
+        if (state >= 4
+            && (
+                Input.GetButtonUp("Jump")
+                || Input.GetMouseButtonUp(0)
+                || Input.GetKeyUp(KeyCode.Return)
+                || Input.touches.ToList().FindAll(
+                    touch =>
+                        touch.phase == TouchPhase.Ended
+                        || touch.phase == TouchPhase.Canceled
+                ).Count > 0
+            ))
         {
             NextScene();
         }
+
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             Application.Quit();
         }
+
         if (Input.GetKeyUp(KeyCode.R))
         {
             PlayerPrefs.DeleteAll();

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Linq;
 
 public class Splash : MonoBehaviour
@@ -45,7 +44,10 @@ public class Splash : MonoBehaviour
 
     bool AdvanceKeyPressed()
     {
-        return Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return) ||
-               Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Began).Count > 0;
+        return Input.GetButtonUp("Jump")
+               || Input.GetMouseButtonUp(0)
+               || Input.GetKeyUp(KeyCode.Space)
+               || Input.GetKeyUp(KeyCode.Return)
+               || Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Began).Count > 0;
     }
 }
