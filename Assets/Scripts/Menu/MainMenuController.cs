@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿#nullable enable
+using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
@@ -14,15 +14,15 @@ public class MainMenuController : MonoBehaviour
     void Start()
     {
         UnityEngine.Cursor.visible = true;
-        GameObject.Find("Player").SendMessage("Go");
-        GameObject.Find("Player").SendMessage("Pause");
-        GameObject.Find("Music").SendMessage("Stop");
+        GameObject.Find("Player")?.SendMessage("Go");
+        GameObject.Find("Player")?.SendMessage("Pause");
+        GameObject.Find("Music")?.SendMessage("Stop");
         Invoke("StartMenuMusic", musicStartDelay);
     }
 
     void StartMenuMusic()
     {
-        GameObject.Find("Music").SendMessage("PlayMenuMusic");
+        GameObject.Find("Music")?.SendMessage("PlayMenuMusic");
     }
 
     void NextScene()
