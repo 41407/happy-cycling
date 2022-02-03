@@ -68,25 +68,25 @@ public class BikeController : MonoBehaviour
 		} else if (!started && body.velocity.magnitude > 0) {
 			body.velocity = new Vector2 (Mathf.Lerp (body.velocity.x, 0, 0.016f), body.velocity.y);
 		}
-		currentMaxSpeed = Mathf.Lerp (currentMaxSpeed, maxSpeed, maxSpeedLerp); 
+		currentMaxSpeed = Mathf.Lerp (currentMaxSpeed, maxSpeed, maxSpeedLerp);
 	}
 
 	void OnCollisionStay2D (Collision2D col)
 	{
 		Land ();
 	}
-	
+
 	void OnCollisionExit2D (Collision2D col)
 	{
 		Invoke ("LeaveGround", ungroundGraceTime);
 	}
-	
+
 	void OnTriggerStay2D (Collider2D col)
 	{
 		rearWheelDown = true;
 		Land ();
 	}
-	
+
 	void OnTriggerExit2D (Collider2D col)
 	{
 		rearWheelDown = false;
@@ -104,7 +104,7 @@ public class BikeController : MonoBehaviour
 			SendMessageUpwards ("Restart", SendMessageOptions.DontRequireReceiver);
 		}
 	}
-	
+
 	void Stop ()
 	{
 		if (!crashed) {
@@ -123,7 +123,6 @@ public class BikeController : MonoBehaviour
 			audioSource.PlayOneShot (crash, 1.0f);
 			rider.SetActive (false);
 			Score.AddCrash ();
-			PlayerPrefs.SetInt ("Crashes", Score.GetCrashes ());
 			InstantiateRagdoll ();
 		}
 	}
@@ -133,7 +132,7 @@ public class BikeController : MonoBehaviour
 		rider.SendMessage ("LeaveGround", SendMessageOptions.DontRequireReceiver);
 		grounded = false;
 	}
-	
+
 	void Land ()
 	{
 		rider.SendMessage ("Land", SendMessageOptions.DontRequireReceiver);

@@ -59,6 +59,7 @@ public class SceneController : MonoBehaviour
                 PlayerPrefs.SetInt("Level", level);
                 Score.AddTime(levelTimeElapsed);
                 PlayerPrefs.SetFloat("Time", Score.GetTime());
+                PlayerPrefs.SetInt("Crashes", Score.GetCrashes());
                 levelTimeElapsed = 0;
                 builder.Build(level, cam.transform.position, levelWidth);
                 builder.Build(level + 1, cam.transform.position, levelWidth * 2);
