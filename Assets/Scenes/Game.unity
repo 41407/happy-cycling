@@ -141,6 +141,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 1579731079696132, guid: c2d2ada29f4de48d88c015d8856ffadf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114505442158484058, guid: c2d2ada29f4de48d88c015d8856ffadf,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 223706872891138372, guid: c2d2ada29f4de48d88c015d8856ffadf,
         type: 3}
       propertyPath: m_Camera
@@ -253,6 +262,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2d2ada29f4de48d88c015d8856ffadf, type: 3}
+--- !u!1 &78118730 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1579731079696132, guid: c2d2ada29f4de48d88c015d8856ffadf,
+    type: 3}
+  m_PrefabInstance: {fileID: 78118729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &78118731
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78118730}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1082115695
 PrefabInstance:
   m_ObjectHideFlags: 0
