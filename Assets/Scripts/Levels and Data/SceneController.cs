@@ -92,6 +92,8 @@ public class SceneController : MonoBehaviour
 
     public void ExitGame()
     {
+        PlayerPrefs.SetFloat("Time", Score.GetTime());
+        PlayerPrefs.SetInt("Crashes", Score.GetCrashes());
         builder.Reset();
         SceneManager.LoadSceneAsync("Main Menu");
         gameObject.SetActive(false);
