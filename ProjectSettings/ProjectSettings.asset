@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 0
-  bundleVersion: 2022.2.1
+  bundleVersion: 2022.2.2
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -709,7 +709,7 @@ PlayerSettings:
     iPhone: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel:
-    Android: 1
+    Android: 4
   incrementalIl2cppBuild:
     iPhone: 0
   suppressCommonWarnings: 1
@@ -802,4 +802,3 @@ PlayerSettings:
   playerDataPath: 
   forceSRGBBlit: 1
   virtualTexturingSupportEnabled: 0
-  uploadClearedTextureDataAfterCreationFromScript: 1
