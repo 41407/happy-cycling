@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ObjectPool : MonoBehaviour
 {
-    //Used to define how many objects to pool when object initialized without parameter pool size 
+    //Used to define how many objects to pool when object initialized without parameter pool size
     public int defaultPoolSize = 10;
 
     //Here is a private reference only this class can access
@@ -45,6 +45,7 @@ public class ObjectPool : MonoBehaviour
             Initialize(objectType);
         }
         GameObject newObject = PullFromList(objectPool[objectType], objectType);
+        if (!newObject) return null;
         newObject.transform.position = position;
         newObject.transform.rotation = rotation;
         return newObject;
@@ -70,9 +71,11 @@ public class ObjectPool : MonoBehaviour
                 return list[i];
             }
         }
-        GameObject newObject = (GameObject)Instantiate(objectType);
-        newObject.SetActive(false);
-        list.Add(newObject);
-        return newObject;
+
+        return null;
+        /*   GameObject newObject = (GameObject)Instantiate(objectType);
+           newObject.SetActive(false);
+           list.Add(newObject);
+           return newObject;*/
     }
 }

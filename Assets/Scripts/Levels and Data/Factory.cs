@@ -23,10 +23,8 @@ public class Factory : MonoBehaviour
 
     void OnEnable()
     {
-        ObjectPool.pool.Initialize(groundTouchParticle, 50);
+        ObjectPool.pool.Initialize(groundTouchParticle, 5);
     }
-	
-	
 
     GameObject InitializeParameters(GameObject created)
     {
@@ -36,7 +34,9 @@ public class Factory : MonoBehaviour
 
     public GameObject ByReference(GameObject gameObject, Vector3 position, Quaternion rotation)
     {
-        return InitializeParameters(ObjectPool.pool.Pull(gameObject, position, rotation));
+        var created = ObjectPool.pool.Pull(gameObject, position, rotation);
+        if (created) return InitializeParameters(created);
+        return null;
     }
 
     public GameObject GroundTouchParticle(Vector2 position, Quaternion rotation)
