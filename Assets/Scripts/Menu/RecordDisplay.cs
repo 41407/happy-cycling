@@ -18,12 +18,12 @@ public class RecordDisplay : MonoBehaviour
 		targetPosition = transform.position;
 		startPosition = transform.position;
 	}
-	
+
 	void StartTranslate ()
 	{
 		StartTranslate (finishTime);
 	}
-	
+
 	void StartTranslate (float finish)
 	{
 		targetPosition = finalPosition;

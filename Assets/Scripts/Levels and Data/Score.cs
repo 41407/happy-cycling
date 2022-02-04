@@ -5,11 +5,13 @@ public static class Score
 {
     private static int crashes = 0;
     private static float time = 0;
+    static int flips = 0;
 
     public static void Reset()
     {
         crashes = 0;
         time = 0;
+        flips = 0;
     }
 
     public static void AddCrash()
@@ -40,5 +42,20 @@ public static class Score
     public static float GetTime()
     {
         return time;
+    }
+
+    public static void AddFlip()
+    {
+        flips++;
+    }
+
+    public static void SetFlips(int count)
+    {
+        flips = count;
+    }
+
+    public static int GetFlips()
+    {
+        return flips;
     }
 }

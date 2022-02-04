@@ -22,6 +22,8 @@ public class BikeController : MonoBehaviour
 	private bool rearWheelDown = true;
 	private float jumpTorque;
 	private float jumpStrength = 0;
+
+	public bool IsGrounded => grounded;
 #endregion
 
 #region PhysicsParameters

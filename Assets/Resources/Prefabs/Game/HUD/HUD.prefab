@@ -798,10 +798,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72501bdc8fd314d008d3ed916fe4a435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crashHeader: {fileID: 21300000, guid: ea5d845bc9d664967b0a5ad3bc73416e, type: 3}
+  flipHeader: {fileID: 21300000, guid: a44c5f29467224802ae1bfb5f1df442b, type: 3}
+  header: {fileID: 114836264505148934}
   label: {fileID: 1213674211065246}
   refreshRate: 0.16
   emptyIfZero: 1
-  current: 0
+  currentCrashes: 0
+  currentFlips: 0
 --- !u!114 &114970897795095484
 MonoBehaviour:
   m_ObjectHideFlags: 0

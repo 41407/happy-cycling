@@ -14,6 +14,7 @@ public class LoadSavedGameMenuController : MonoBehaviour
         PlayerPrefs.DeleteKey("Level");
         PlayerPrefs.DeleteKey("Time");
         PlayerPrefs.DeleteKey("Crashes");
+        PlayerPrefs.DeleteKey("Flips");
         PlayerPrefs.DeleteKey("Timer Visible");
         LoadGameScene();
     }
@@ -22,6 +23,7 @@ public class LoadSavedGameMenuController : MonoBehaviour
     {
         Score.Reset();
         Score.SetCrashes(PlayerPrefs.GetInt("Crashes"));
+        Score.SetFlips(PlayerPrefs.GetInt("Flips"));
         Score.SetTime(PlayerPrefs.GetFloat("Time"));
         LoadGameScene();
     }

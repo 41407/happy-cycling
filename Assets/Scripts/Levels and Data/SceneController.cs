@@ -60,25 +60,31 @@ public class SceneController : MonoBehaviour
                 Score.AddTime(levelTimeElapsed);
                 PlayerPrefs.SetFloat("Time", Score.GetTime());
                 PlayerPrefs.SetInt("Crashes", Score.GetCrashes());
+                PlayerPrefs.SetInt("Flips", Score.GetFlips());
                 levelTimeElapsed = 0;
                 builder.Build(level, cam.transform.position, levelWidth);
                 builder.Build(level + 1, cam.transform.position, levelWidth * 2);
                 SpawnCat();
             }
+
             cam.SendMessage("Advance");
         }
+
         if (player.transform.position.y < -5)
         {
             player.SendMessage("Crash");
         }
+
         if (Input.GetKeyDown(KeyCode.Escape) && !endingCutscene)
         {
             ExitGame();
         }
+
         if (!paused)
         {
             levelTimeElapsed += Time.deltaTime;
         }
+
         if (Input.GetKey(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.LeftControl))
         {
             DebugKeyCommands();
@@ -111,6 +117,7 @@ public class SceneController : MonoBehaviour
             player.SendMessage("Continue");
             Time.timeScale = 1;
         }
+
         paused = pause;
     }
 
@@ -139,6 +146,7 @@ public class SceneController : MonoBehaviour
             builder.Build(level + 1, cam.transform.position, levelWidth);
             cam.SendMessage("SetLevel", level);
         }
+
         SpawnPlayer();
     }
 
@@ -170,8 +178,8 @@ public class SceneController : MonoBehaviour
     bool PlayerHasCompletedLevel()
     {
         return (player.transform.position.x > cam.transform.position.x + 7.5f)
-            && !playerController.GetCrashed()
-            && !cam.GetComponent<CameraController>().panning;
+               && !playerController.GetCrashed()
+               && !cam.GetComponent<CameraController>().panning;
     }
 
     void GameCompleted()
@@ -180,19 +188,30 @@ public class SceneController : MonoBehaviour
         endingCutscene = true;
         Time.timeScale = 1;
         GameObject.Find("Music").SendMessage("Stop");
+        var crashes = Score.GetCrashes();
         if (TimeRecord())
         {
             print("New time record!");
             PlayerPrefs.SetFloat("TimeRecord", Score.GetTime());
         }
+
         if (CrashesRecord())
         {
             print("New crashes record!");
-            PlayerPrefs.SetInt("CrashesRecord", Score.GetCrashes());
+            PlayerPrefs.SetInt("CrashesRecord", crashes);
         }
+
+        if (crashes == 0 && FlipsRecord())
+        {
+            print("New flips record!");
+            var flips = Score.GetFlips();
+            PlayerPrefs.SetInt("FlipsRecord", flips);
+        }
+
         PlayerPrefs.DeleteKey("Level");
         PlayerPrefs.DeleteKey("Time");
         PlayerPrefs.DeleteKey("Crashes");
+        PlayerPrefs.DeleteKey("Flips");
     }
 
     void EndingCamera()
@@ -207,7 +226,12 @@ public class SceneController : MonoBehaviour
 
     bool CrashesRecord()
     {
-        return !PlayerPrefs.HasKey("CrashesRecord") || PlayerPrefs.GetInt("CrashesRecord") > Score.GetCrashes();
+        return !PlayerPrefs.HasKey("CrashesRecord") || PlayerPrefs.GetInt("CrashesRecord") >= Score.GetCrashes();
+    }
+
+    bool FlipsRecord()
+    {
+        return !PlayerPrefs.HasKey("FlipsRecord") || PlayerPrefs.GetInt("FlipsRecord") < Score.GetFlips();
     }
 
     internal void OnGameSceneExitButtonClick()
