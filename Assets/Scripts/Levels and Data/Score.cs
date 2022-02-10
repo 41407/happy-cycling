@@ -1,61 +1,58 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public static class Score
+﻿public static class Score
 {
-    private static int crashes = 0;
-    private static float time = 0;
-    static int flips = 0;
+    static int Crashes { get; set; }
+    static float Time { get; set; }
+    static int Flips { get; set; }
 
     public static void Reset()
     {
-        crashes = 0;
-        time = 0;
-        flips = 0;
+        Crashes = 0;
+        Time = 0;
+        Flips = 0;
     }
 
     public static void AddCrash()
     {
-        crashes++;
+        Crashes++;
     }
 
-    public static void SetCrashes(int newCrashes)
+    public static void SetCrashes(int count)
     {
-        crashes = newCrashes;
+        Crashes = count;
     }
 
     public static int GetCrashes()
     {
-        return crashes;
+        return Crashes;
     }
 
-    public static void AddTime(float elapsed)
+    public static void AddTime(float timeSeconds)
     {
-        time += elapsed;
+        Time += timeSeconds;
     }
 
     public static void SetTime(float newTime)
     {
-        time = newTime;
+        Time = newTime;
     }
 
     public static float GetTime()
     {
-        return time;
+        return Time;
     }
 
     public static void AddFlip()
     {
-        flips++;
+        Flips++;
     }
 
     public static void SetFlips(int count)
     {
-        flips = count;
+        Flips = count;
     }
 
     public static int GetFlips()
     {
-        return flips;
+        return Flips;
     }
 }

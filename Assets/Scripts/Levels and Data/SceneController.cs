@@ -100,6 +100,7 @@ public class SceneController : MonoBehaviour
     {
         PlayerPrefs.SetFloat("Time", Score.GetTime());
         PlayerPrefs.SetInt("Crashes", Score.GetCrashes());
+        PlayerPrefs.SetInt("Flips", Score.GetFlips());
         builder.Reset();
         SceneManager.LoadSceneAsync("Main Menu");
         gameObject.SetActive(false);
@@ -245,6 +246,7 @@ public class SceneController : MonoBehaviour
         {
             PlayerPrefs.SetInt("Level", 0);
             PlayerPrefs.SetInt("Crashes", 0);
+            PlayerPrefs.SetInt("Flips", 0);
             restartEnabled = true;
             Restart();
         }
