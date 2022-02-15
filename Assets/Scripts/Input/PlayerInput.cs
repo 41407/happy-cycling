@@ -41,8 +41,7 @@ public class PlayerInput : MonoBehaviour
 
     bool KeyUp()
     {
-        return Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Ended
-                                                   || t.phase == TouchPhase.Canceled).Count > 0
+        return Input.touches.ToList().FindAll(t => t.phase is TouchPhase.Ended or TouchPhase.Canceled).Count > 0
                || Input.GetMouseButtonUp(0)
                || Input.GetButtonUp("Jump");
     }
@@ -50,8 +49,7 @@ public class PlayerInput : MonoBehaviour
     bool Key()
     {
         return
-            Input.touches.ToList().FindAll(t => t.phase == TouchPhase.Moved
-                                                || t.phase == TouchPhase.Stationary).Count > 0
+            Input.touches.ToList().FindAll(t => t.phase is TouchPhase.Moved or TouchPhase.Stationary).Count > 0
             || Input.GetMouseButton(0)
             || Input.GetButton("Jump");
     }
