@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerPrefsConditionalActivation : MonoBehaviour
+public class DisableIfPlayerPrefsIsZero : MonoBehaviour
 {
     [SerializeField] string key;
 

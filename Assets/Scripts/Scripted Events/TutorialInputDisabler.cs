@@ -10,7 +10,6 @@ public class TutorialInputDisabler : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        player.SendMessage("Pause", SendMessageOptions.DontRequireReceiver);
     }
 
     void Update()

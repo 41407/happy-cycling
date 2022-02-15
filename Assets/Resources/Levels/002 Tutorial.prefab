@@ -121,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 489094}
   - component: {fileID: 11450850}
+  - component: {fileID: 4557974466385623744}
   m_Layer: 0
   m_Name: Tutorial Script
   m_TagString: Untagged
@@ -160,6 +161,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialCompletedPrefab: {fileID: 170032, guid: 6ea5dddcad436408ea7dda931a8fc08d,
     type: 3}
+--- !u!114 &4557974466385623744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 037c791449dd04f8d9244758a7d6ea2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &109348
 GameObject:
   m_ObjectHideFlags: 0
