@@ -48,7 +48,7 @@ public class TheEnd : MonoBehaviour
                 break;
             case 3:
                 player.SendMessage("Go");
-                player.GetComponent<BikeController>().maxSpeed = 3;
+                player.GetComponent<BikeController>().MaxSpeed = 3;
                 GameObject.Find("Music").SendMessage("PlayEndingMusic");
                 AdvanceStage();
                 break;
